@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\srfue\\IDWM\\TallerIDWM\\api\\api.csproj": {}
+    "C:\\Users\\srfue\\IDWM\\TallerIDWM\\TallerIDWM\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\srfue\\IDWM\\TallerIDWM\\api\\api.csproj": {
+    "C:\\Users\\srfue\\IDWM\\TallerIDWM\\TallerIDWM\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\srfue\\IDWM\\TallerIDWM\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\srfue\\IDWM\\TallerIDWM\\TallerIDWM\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\srfue\\IDWM\\TallerIDWM\\api\\api.csproj",
+        "projectPath": "C:\\Users\\srfue\\IDWM\\TallerIDWM\\TallerIDWM\\api.csproj",
         "packagesPath": "C:\\Users\\srfue\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\srfue\\IDWM\\TallerIDWM\\api\\obj\\",
+        "outputPath": "C:\\Users\\srfue\\IDWM\\TallerIDWM\\TallerIDWM\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\srfue\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\srfue\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,9 +43,29 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "DotNetEnv": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
