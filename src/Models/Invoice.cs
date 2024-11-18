@@ -10,10 +10,14 @@ namespace TallerIDWM.src.Models
     {
         // Atributos
         public int InvoiceId { get; set; } // PK
-        public int UserId { get; set; } // FK User
         
         public DateOnly PurchaseDate { get; set; } // Fecha de la compra
         public int Total { get; set; } // Total de la compra
+
+
+        // EF Relationship
+        public int UserId { get; set; } // FK User
+        public required User User { get; set; } // Relación con la tabla User
         
     }
 }
