@@ -1,0 +1,7 @@
+[
+    { "CategoryId": 1, "Name": "Poleras" },
+    { "CategoryId": 2, "Name": "Gorros" },
+    { "CategoryId": 3, "Name": "Juguetería" },
+    { "CategoryId": 4, "Name": "Alimentación" },
+    { "CategoryId": 5, "Name": "Libros" }
+]

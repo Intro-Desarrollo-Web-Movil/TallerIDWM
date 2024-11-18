@@ -1,0 +1,32 @@
+[
+    {
+        "UserId": 1,
+        "Name": "Jorge Pérez",
+        "Email": "jorge.perez@example.com",
+        "Password": "securepassword123",
+        "BirthDate": "1990-05-15",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2
+    },
+    {
+        "UserId": 2,
+        "Name": "María Rodríguez",
+        "Email": "maria.rodriguez@example.com",
+        "Password": "securepassword456",
+        "BirthDate": "1988-09-23",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1
+    },
+    {
+        "UserId": 3,
+        "Name": "Admin User",
+        "Email": "admin@example.com",
+        "Password": "adminpassword",
+        "BirthDate": "1980-01-01",
+        "IsActive": true,
+        "RoleId": 1,
+        "GenderId": 2
+    }
+]

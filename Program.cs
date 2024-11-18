@@ -19,6 +19,16 @@ builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlite(connectionString
 
 var app = builder.Build();
 
+// Crea los Scope para la base de datos
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DataContext>(); //Ingresa al DataContext que tengo guardado la Base de datos
+    await context.Database.MigrateAsync(); // Migrar la base de datos
+    await DataSeeder.Initialize(services); // Inicializar la base de datos
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

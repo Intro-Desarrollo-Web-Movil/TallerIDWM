@@ -18,6 +18,7 @@ namespace TallerIDWM.src.Models
         // EF Relationship
         public int UserId { get; set; } // FK User
         public required User User { get; set; } // Relación con la tabla User
+        public List<InvoiceDetail> InvoiceDetails { get; set; } = []; // Relación con la tabla InvoiceDetail
         
     }
 }

@@ -1,0 +1,5 @@
+[
+    { "InvoiceDetailId": 1, "InvoiceId": 1, "ProductId": 1, "Quantity": 2, "UnitPrice": 10000 },
+    { "InvoiceDetailId": 2, "InvoiceId": 1, "ProductId": 2, "Quantity": 1, "UnitPrice": 5000 },
+    { "InvoiceDetailId": 3, "InvoiceId": 2, "ProductId": 3, "Quantity": 4, "UnitPrice": 60000 }
+]
