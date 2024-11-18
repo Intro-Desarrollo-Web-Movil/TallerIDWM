@@ -1,6 +1,8 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using TallerIDWM.src.Data;
+using TallerIDWM.src.Interfaces;
+using TallerIDWM.src.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 Env.Load();
@@ -29,6 +31,8 @@ using (var scope = app.Services.CreateScope())
     await context.Database.MigrateAsync(); // Migrar la base de datos
     await DataSeeder.Initialize(services); // Inicializar la base de datos
 }
+
+app.MapControllers();
 
 
 // Configure the HTTP request pipeline.

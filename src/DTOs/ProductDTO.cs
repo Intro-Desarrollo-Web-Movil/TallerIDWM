@@ -16,6 +16,6 @@ namespace TallerIDWM.src.DTOs
 
 
         public int CategoryId { get; set; } // FK Type
-        public Category Categoty {get; set;} = null!; // Relación a 1
+        public Category Category {get; set;} = null!; // Relación a 1
     }
 }

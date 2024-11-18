@@ -8,6 +8,7 @@ using TallerIDWM.src.Models;
 using Microsoft.EntityFrameworkCore;
 using TallerIDWM.src.DTOs;
 using TallerIDWM.src.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace TallerIDWM.src.Controllers
 {
@@ -26,10 +27,32 @@ namespace TallerIDWM.src.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IResult> GetAllProducts()
         {
             var products = await _productRepository.GetAllProducts();
-            return Ok(products);
+            var productDtos = products.Select(p => new ProductDto
+            {
+                ProductId = p.ProductId,
+                Name = p.Name,
+                Price = p.Price,
+                Stock = p.Stock,
+                ImageUrl = p.ImageUrl,
+                CategoryId = p.CategoryId
+
+            }).ToList();
+            return TypedResults.Ok(productDtos);
+        }
+
+
+        [HttpGet("{name}")]
+        public async Task<IResult> GetProductByName(string name)
+        {
+            var product = await _productRepository.GetProductByName(name);
+            if (product == null)
+            {
+                return TypedResults.NotFound("Usuario no encontrado");
+            }
+            return TypedResults.Ok(product);
         }
     }
 

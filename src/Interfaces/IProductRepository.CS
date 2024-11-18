@@ -13,5 +13,8 @@ namespace TallerIDWM.src.Interfaces
     {
         Task<List<Product>> GetAllProducts();
         
+        Task<Product> GetProductByName(string name);
+
+
     }
 }

@@ -22,6 +22,11 @@ namespace TallerIDWM.src.Repositories
         {
             return await _context.Products.ToListAsync();
         }
+
+        public async Task<Product> GetProductByName(string name)
+        {
+            return await _context.Products.FirstOrDefaultAsync(x => x.Name == name);
+        }
         
     }
 
