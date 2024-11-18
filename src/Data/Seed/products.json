@@ -1,0 +1,7 @@
+[
+    { "ProductId": 1, "Name": "Camiseta Blanca", "Price": 10000, "Stock": 50, "ImageUrl": "https://example.com/camiseta1.jpg", "CategoryId": 1 },
+    { "ProductId": 2, "Name": "Gorro Azul", "Price": 5000, "Stock": 30, "ImageUrl": "https://example.com/gorro1.jpg", "CategoryId": 2 },
+    { "ProductId": 3, "Name": "Juguete de Madera", "Price": 15000, "Stock": 20, "ImageUrl": "https://example.com/juguete1.jpg", "CategoryId": 3 },
+    { "ProductId": 4, "Name": "Caja de Galletas", "Price": 8000, "Stock": 100, "ImageUrl": "https://example.com/galletas.jpg", "CategoryId": 4 },
+    { "ProductId": 5, "Name": "Libro de Aventuras", "Price": 12000, "Stock": 40, "ImageUrl": "https://example.com/libro1.jpg", "CategoryId": 5 }
+]
