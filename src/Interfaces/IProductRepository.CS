@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TallerIDWM.src.Models;
+using TallerIDWM.src.DTOs;
+using TallerIDWM.src.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace TallerIDWM.src.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetProducts();
-        Task<Product> GetProduct(int id);
-        Task<Product> PostProduct(Product product);
-        Task<Product> PutProduct(Product product);
-        Task<Product> DeleteProduct(int id);
+        Task<List<Product>> GetAllProducts();
+        
     }
 }

@@ -21,10 +21,10 @@ namespace TallerIDWM.src.DTOs
 
         // Relación User y Role
         public int RoleId { get; set; } // FK Role
-        public Role role {get; set;} = null!; // Relación a 1
+        
 
         // Relación User y Gender
         public int GenderId { get; set; } // FK Gender
-        public Gender Gender { get; set; } = null!; // Relación a 1
+
     }
 }
