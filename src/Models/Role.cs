@@ -13,7 +13,8 @@ namespace TallerIDWM.src.Models
         // Atributos
         public int RoleId { get; set; } // PK
         public string Name { get; set; } = string.Empty;
-        
-        
+
+        // No tiene EF Relationships debido a que es inútil almacenar una lista de usuarios en cada rol
+        // Definiremos estos roles en el DataSeeder ya que son estáticos
     }
 }
