@@ -1,32 +1,32 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TallerIDWM.src.Models;
+using TallerIDWM.src.ValidationAttributes;
 
 namespace TallerIDWM.src.DTOs
 {
     public class UserDto
     {
-                // Atributos
-        public int UserId { get; set; } // PK
-        public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-        public DateOnly BirthDate { get; set; }
+        
+        public required int UserId { get; set; }
+        [StringLength(255, MinimumLength = 8)]
+        public required string Name { get; set; }
+        [EmailAddress]
+        public required string Email { get; set; }
+        [StringLength(20, MinimumLength = 8)]
+        public required string Password { get; set; }
+        [Birthdate]
+        public required DateOnly BirthDate { get; set; }
         public bool IsActive { get; set; }
+        
+        public int RoleId { get; set; } 
+        public required Role role {get; set;}
 
-
-
-        // Entityframework Relationships : Relaciones para interactuar entre Modelos
-
-
-        // Relación User y Role
-        public int RoleId { get; set; } // FK Role
-        public Role role {get; set;} = null!; // Relación a 1
-
-        // Relación User y Gender
-        public int GenderId { get; set; } // FK Gender
-        public Gender Gender { get; set; } = null!; // Relación a 1
+        public int GenderId { get; set; } 
+        public required Gender Gender { get; set; }
     
     }
 }
