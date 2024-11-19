@@ -18,15 +18,77 @@ namespace TallerIDWM.src.Repositories
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts(string? name, string? Category, string? sort)
         {
-            return await _context.Products.ToListAsync();
+            var products = await _context.Products.ToListAsync();
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(Category))
+            {
+                int categoryNumber = -1;
+                if (Category == "Poleras")
+                {
+                    categoryNumber = 1;
+                }
+                else if (Category == "Gorros")
+                {
+                    categoryNumber = 2;
+                }
+                else if (Category == "Jugueteria")
+                {
+                    categoryNumber = 3;
+                }
+                else if (Category == "Alimentacion")
+                {
+                    categoryNumber = 4;
+                }
+                else if (Category == "Libros")
+                {
+                    categoryNumber = 5;
+                }
+                products = products.Where(u => u.Name.ToLower() == name.ToLower() && u.CategoryId == categoryNumber).ToList();
+            }
+            if (!string.IsNullOrEmpty(Category))
+            {
+                int categoryNumber = -1;
+                if(Category == "Poleras")
+                {
+                    categoryNumber = 1;
+                }
+                else if(Category == "Gorros")
+                {
+                    categoryNumber = 2;
+                }
+                else if(Category == "Jugueteria")
+                {
+                    categoryNumber = 3;
+                }
+                else if(Category == "Alimentacion")
+                {
+                    categoryNumber = 4;
+                }
+                else if(Category == "Libros")
+                {
+                    categoryNumber = 5;
+                }
+                products = products.Where(u => u.CategoryId == categoryNumber).ToList();
+            }
+            if (!string.IsNullOrEmpty(name))
+            {
+                products = products.Where(u => u.Name.ToLower() == name.ToLower()).ToList();
+            }
+
+            if(sort == "asc")
+            {
+                products = products.OrderBy(u => u.Name).ToList();
+            }
+
+            else if(sort == "desc")
+            {
+                products = products.OrderByDescending(u => u.Name).ToList();
+            }
+
+            return products;
         }
 
-        public async Task<Product> GetProductByName(string name)
-        {
-            return await _context.Products.FirstOrDefaultAsync(x => x.Name == name);
-        }
         
     }
 

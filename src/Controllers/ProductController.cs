@@ -26,34 +26,29 @@ namespace TallerIDWM.src.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IResult> GetAllProducts()
+        [HttpGet("")]
+        public async Task<IResult> GetAllProducts(string? name, string? Category, string? sort)
         {
-            var products = await _productRepository.GetAllProducts();
-            var productDtos = products.Select(p => new ProductDto
-            {
-                ProductId = p.ProductId,
-                Name = p.Name,
-                Price = p.Price,
-                Stock = p.Stock,
-                ImageUrl = p.ImageUrl,
-                CategoryId = p.CategoryId
-
-            }).ToList();
-            return TypedResults.Ok(productDtos);
+            if (sort != null && sort.ToLower() != "asc" && sort.ToLower() != "desc")
+        {
+            return TypedResults.BadRequest("El valor de 'sort' debe ser 'asc' o 'desc'.");
         }
 
-
-        [HttpGet("{name}")]
-        public async Task<IResult> GetProductByName(string name)
+        if  (Category != null && 
+            Category.ToLower() != "Poleras" && 
+            Category.ToLower() != "Gorros" && 
+            Category.ToLower() != "Jugueteria" && 
+            Category.ToLower() != "Alimentacion" &&
+            Category.ToLower() != "Libros")
         {
-            var product = await _productRepository.GetProductByName(name);
-            if (product == null)
-            {
-                return TypedResults.NotFound("Usuario no encontrado");
-            }
-            return TypedResults.Ok(product);
+            return TypedResults.BadRequest("El valor de 'Category' no es válido.");
         }
+
+            var users = await _productRepository.GetAllProducts(name, Category, sort);
+            return TypedResults.Ok(users);
+        }
+        
+
     }
 
 }
