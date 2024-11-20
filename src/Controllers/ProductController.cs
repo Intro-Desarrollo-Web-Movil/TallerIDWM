@@ -27,25 +27,26 @@ namespace TallerIDWM.src.Controllers
 
 
         [HttpGet("")]
-        public async Task<IResult> GetAllProducts(string? name, string? Category, string? sort)
+        public async Task<IResult> GetAllProducts(string? name, int? Category, string? sort)
         {
             if (sort != null && sort.ToLower() != "asc" && sort.ToLower() != "desc")
         {
             return TypedResults.BadRequest("El valor de 'sort' debe ser 'asc' o 'desc'.");
         }
 
-        if  (Category != null && 
-            Category.ToLower() != "Poleras" && 
-            Category.ToLower() != "Gorros" && 
-            Category.ToLower() != "Jugueteria" && 
-            Category.ToLower() != "Alimentacion" &&
-            Category.ToLower() != "Libros")
-        {
-            return TypedResults.BadRequest("El valor de 'Category' no es válido.");
-        }
+            var products = await _productRepository.GetAllProducts(name, Category, sort);
 
-            var users = await _productRepository.GetAllProducts(name, Category, sort);
-            return TypedResults.Ok(users);
+            var productDtos = products.Select(p => new ProductDto
+            {
+                ProductId = p.ProductId,
+                Name = p.Name,
+                Price = p.Price,
+                Stock = p.Stock,
+                ImageUrl = p.ImageUrl,
+                CategoryId = p.CategoryId
+            }).ToList();
+
+            return TypedResults.Ok(productDtos);
         }
         
 

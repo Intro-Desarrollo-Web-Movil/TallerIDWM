@@ -11,7 +11,7 @@ namespace TallerIDWM.src.Interfaces
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetAllProducts(string? name, string? Category, string? sort);
+        Task<List<Product>> GetAllProducts(string? name, int? Category, string? sort);
 
 
     }

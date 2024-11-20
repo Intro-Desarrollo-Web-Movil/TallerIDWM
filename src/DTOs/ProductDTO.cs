@@ -18,7 +18,7 @@ namespace TallerIDWM.src.DTOs
         public int Stock { get; set; } // Cantidad en stock (entero mayor a 0)
         public string ImageUrl { get; set; } = string.Empty;
 
-
+        public int CategoryId { get; set; } // FK Type
     
     }
 }

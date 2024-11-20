@@ -18,72 +18,28 @@ namespace TallerIDWM.src.Repositories
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllProducts(string? name, string? Category, string? sort)
+        public async Task<List<Product>> GetAllProducts(string? name, int? Category, string? sort)
         {
             var products = await _context.Products.ToListAsync();
-            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(Category))
+
+            if(!string.IsNullOrEmpty(name))
             {
-                int categoryNumber = -1;
-                if (Category == "Poleras")
-                {
-                    categoryNumber = 1;
-                }
-                else if (Category == "Gorros")
-                {
-                    categoryNumber = 2;
-                }
-                else if (Category == "Jugueteria")
-                {
-                    categoryNumber = 3;
-                }
-                else if (Category == "Alimentacion")
-                {
-                    categoryNumber = 4;
-                }
-                else if (Category == "Libros")
-                {
-                    categoryNumber = 5;
-                }
-                products = products.Where(u => u.Name.ToLower() == name.ToLower() && u.CategoryId == categoryNumber).ToList();
+                products = products.Where(u => u.Name.ToLower().Contains(name.ToLower())).ToList();
             }
-            if (!string.IsNullOrEmpty(Category))
+
+            if(!string.IsNullOrEmpty(Category.ToString()))
             {
-                int categoryNumber = -1;
-                if(Category == "Poleras")
-                {
-                    categoryNumber = 1;
-                }
-                else if(Category == "Gorros")
-                {
-                    categoryNumber = 2;
-                }
-                else if(Category == "Jugueteria")
-                {
-                    categoryNumber = 3;
-                }
-                else if(Category == "Alimentacion")
-                {
-                    categoryNumber = 4;
-                }
-                else if(Category == "Libros")
-                {
-                    categoryNumber = 5;
-                }
-                products = products.Where(u => u.CategoryId == categoryNumber).ToList();
-            }
-            if (!string.IsNullOrEmpty(name))
-            {
-                products = products.Where(u => u.Name.ToLower() == name.ToLower()).ToList();
+                products = products.Where(u => u.CategoryId == Category).ToList();
             }
 
             if(sort == "asc")
             {
-                products = products.OrderBy(u => u.Name).ToList();
+                products = products.OrderBy(u => u.Price).ToList();
             }
 
             else if(sort == "desc")
             {
-                products = products.OrderByDescending(u => u.Name).ToList();
+                products = products.OrderByDescending(u => u.Price).ToList();
             }
 
             return products;
