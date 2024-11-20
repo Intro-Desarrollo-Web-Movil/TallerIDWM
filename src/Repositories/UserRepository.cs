@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using TallerIDWM.src.Data;
 using TallerIDWM.src.DTOs;
@@ -18,7 +19,7 @@ namespace TallerIDWM.src.Repositories
             _context = context;
         }
 
-        public async Task<UserDto> CreateUser(CreateUserDto createUserDto)
+        public  Task<UserDto> CreateUser(CreateUserDto createUserDto)
         {
             throw new NotImplementedException();
         }
@@ -40,6 +41,11 @@ namespace TallerIDWM.src.Repositories
             return await _context.Users.ToListAsync();
         }
 
+        public Task<UserDto> GetCurrentUser()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<UserDto?> GetUserById(int id)
         {
             var user = await _context.Users.Include(u=> u.Gender)
@@ -47,9 +53,20 @@ namespace TallerIDWM.src.Repositories
             return user is null ? null : UserMapper.toUserDto(user);
         }
 
-        public async Task<UserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
+        public  Task<UserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<UserDto> UpdateUserStatus(int id, bool IsActive)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id)
+                ?? throw new Exception("El usuario no existe");
+            user.IsActive = IsActive;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return UserMapper.toUserDto(user);
         }
     }
 }
