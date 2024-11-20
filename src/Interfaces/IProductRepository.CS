@@ -16,5 +16,10 @@ namespace TallerIDWM.src.Interfaces
         Task<Product>GetProductById(int id);
 
         Task<List<Product>> GetAllProductAdmin();
+
+
+        Task<Product> DeleteProductById(int id);
     }
+
+    
 }

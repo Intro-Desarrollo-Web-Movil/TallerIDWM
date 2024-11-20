@@ -87,8 +87,24 @@ namespace TallerIDWM.src.Controllers
             return TypedResults.Ok(productDtos);
         }
 
-        
+        [HttpDelete("{id}")]
+        [Authorize (Roles = "Admin")]
 
+        public async Task<IResult> DeleteProductById(int id)
+        {
+            var product = await _productRepository.DeleteProductById(id);
+
+            var productDto = new ProductDto
+            {
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock,
+                ImageUrl = product.ImageUrl,
+            };
+
+            return TypedResults.Ok(productDto);
+        }
     }
 
 }

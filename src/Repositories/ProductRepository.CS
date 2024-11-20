@@ -64,6 +64,20 @@ namespace TallerIDWM.src.Repositories
         }
 
         
+        public async Task<Product> DeleteProductById(int id)
+        {
+            
+            var product = await _context.Products.FirstOrDefaultAsync(u => u.ProductId == id);
+            if (product == null)
+            {
+                throw new KeyNotFoundException($"Producto con id {id} no encontrado");
+            }
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return product;
+            
+        }
+
     }
 
     
