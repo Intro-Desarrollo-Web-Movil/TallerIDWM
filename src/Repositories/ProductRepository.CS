@@ -56,6 +56,13 @@ namespace TallerIDWM.src.Repositories
             return product;
         }
 
+
+        public async Task<List<Product>> GetAllProductAdmin()
+        {
+            var products = await _context.Products.ToListAsync();
+            return products;
+        }
+
         
     }
 

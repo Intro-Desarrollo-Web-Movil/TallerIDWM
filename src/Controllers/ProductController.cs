@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using TallerIDWM.src.DTOs;
 using TallerIDWM.src.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TallerIDWM.src.Controllers
 {
@@ -42,8 +44,7 @@ namespace TallerIDWM.src.Controllers
                 Name = p.Name,
                 Price = p.Price,
                 Stock = p.Stock,
-                ImageUrl = p.ImageUrl,
-                CategoryId = p.CategoryId
+                ImageUrl = p.ImageUrl
             }).ToList();
 
             return TypedResults.Ok(productDtos);
@@ -62,13 +63,30 @@ namespace TallerIDWM.src.Controllers
                 Price = product.Price,
                 Stock = product.Stock,
                 ImageUrl = product.ImageUrl,
-                CategoryId = product.CategoryId
             };
 
             return TypedResults.Ok(productDto);
         }
 
-        
+
+        [HttpGet("allPAdmin")]
+        [Authorize (Roles = "Admin")]
+        public async Task<IResult> GetAllProductAdmin()
+        {
+            var products = await _productRepository.GetAllProductAdmin();
+
+            var productDtos = products.Select(p => new ProductDto
+            {
+                ProductId = p.ProductId,
+                Name = p.Name,
+                Price = p.Price,
+                Stock = p.Stock,
+                ImageUrl = p.ImageUrl
+            }).ToList();
+
+            return TypedResults.Ok(productDtos);
+        }
+
         
 
     }

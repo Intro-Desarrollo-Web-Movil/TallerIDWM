@@ -14,5 +14,7 @@ namespace TallerIDWM.src.Interfaces
         Task<List<Product>> GetAllProducts(string? name, int? Category, string? sort);
 
         Task<Product>GetProductById(int id);
+
+        Task<List<Product>> GetAllProductAdmin();
     }
 }
