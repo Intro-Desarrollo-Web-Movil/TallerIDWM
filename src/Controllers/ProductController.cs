@@ -48,6 +48,27 @@ namespace TallerIDWM.src.Controllers
 
             return TypedResults.Ok(productDtos);
         }
+
+
+        [HttpGet("{id}")]
+        public async Task<IResult> GetProductById(int id)
+        {
+            var product = await _productRepository.GetProductById(id);
+
+            var productDto = new ProductDto
+            {
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock,
+                ImageUrl = product.ImageUrl,
+                CategoryId = product.CategoryId
+            };
+
+            return TypedResults.Ok(productDto);
+        }
+
+        
         
 
     }

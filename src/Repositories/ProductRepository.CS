@@ -45,6 +45,17 @@ namespace TallerIDWM.src.Repositories
             return products;
         }
 
+
+        public async Task<Product> GetProductById(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(u => u.ProductId == id);
+            if (product == null)
+            {
+                throw new KeyNotFoundException($"Producto con id {id} no encontrado");
+            }
+            return product;
+        }
+
         
     }
 
