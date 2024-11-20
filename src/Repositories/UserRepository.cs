@@ -18,14 +18,19 @@ namespace TallerIDWM.src.Repositories
             _context = context;
         }
 
-        public Task<UserDto> CreateUser(CreateUserDto createUserDto)
+        public async Task<UserDto> CreateUser(CreateUserDto createUserDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<UserDto> DeleteUser(int id)
+        public async Task<UserDto> DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.FindAsync(id)
+            ?? throw new Exception ("El usuario no existe");
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return UserMapper.toUserDto(user);
         }
 
         public async Task<List<User>> GetAllUser()
@@ -35,12 +40,14 @@ namespace TallerIDWM.src.Repositories
             return await _context.Users.ToListAsync();
         }
 
-        public Task<UserDto?> GetUserById(int id)
+        public async Task<UserDto?> GetUserById(int id)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.Include(u=> u.Gender)
+                .FirstOrDefaultAsync(u=> u.UserId == id);
+            return user is null ? null : UserMapper.toUserDto(user);
         }
 
-        public Task<UserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
+        public async Task<UserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
             throw new NotImplementedException();
         }
