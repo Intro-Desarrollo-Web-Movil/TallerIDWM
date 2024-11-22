@@ -20,7 +20,8 @@ namespace TallerIDWM.src.Mappers
                 RoleId = user.RoleId,
                 role = user.role,
                 GenderId = user.GenderId,
-                Gender = user.Gender
+                Gender = user.Gender,
+                Rut = user.Rut
             };
         }
         public static User toUser (this UserDto userDto){
@@ -34,7 +35,8 @@ namespace TallerIDWM.src.Mappers
                 RoleId = userDto.RoleId,
                 role = userDto.role,
                 GenderId = userDto.GenderId,
-                Gender = userDto.Gender
+                Gender = userDto.Gender,
+                Rut = userDto.Rut
             };
         }
     }

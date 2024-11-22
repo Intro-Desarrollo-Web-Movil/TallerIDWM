@@ -1,0 +1,6 @@
+[
+    { "GenderId": 1, "Name": "Femenino" },
+    { "GenderId": 2, "Name": "Masculino" },
+    { "GenderId": 3, "Name": "Prefiero no decirlo" },
+    { "GenderId": 4, "Name": "Otro" }
+]

@@ -1,0 +1,4 @@
+[
+    { "InvoiceId": 1, "UserId": 1, "PurchaseDate": "2024-11-15", "Total": 25000 },
+    { "InvoiceId": 2, "UserId": 2, "PurchaseDate": "2024-11-16", "Total": 48000 }
+]
