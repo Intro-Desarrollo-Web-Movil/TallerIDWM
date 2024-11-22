@@ -25,7 +25,7 @@ namespace TallerIDWM.src.Controllers
 
         public async Task<IActionResult> GetAll(){
             var users = await _userRepository.GetAllUser();
-            var  userDto = users.Select(u=> u.toUserDto());
+          //  var  userDto = users.Select(u=> u.toUserDto());
             return Ok(users);
         }
 
@@ -53,22 +53,5 @@ namespace TallerIDWM.src.Controllers
             var updateUser = await _userRepository.UpdateUserStatus(id,status); 
             return Ok(updateUser);
         }
-        //get, update, delete, create
-/*
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin", "Cliente")]
-        public async Task<IActionResult> deleteProduct (int id){
-            var user = await _context.;
-            if (user = null){
-                return NotFound(new{ Message = "El usuario no existe"});
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { Message = "Usuario eliminado exitosamente"});
-        }
-    }
-    */
     }
 }

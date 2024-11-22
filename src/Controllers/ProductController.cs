@@ -67,10 +67,6 @@ namespace TallerIDWM.src.Controllers
 
             return TypedResults.Ok(productDto);
         }
-
-        
-        
-
     }
 
 }
