@@ -22,6 +22,8 @@ namespace TallerIDWM.src.Interfaces
         Task<Product> CreateProduct(Product product);
 
 
+        Task<Product> UpdateProduct(int id, Product product);
+
         Task<Product> DeleteProductById(int id);
     }
 

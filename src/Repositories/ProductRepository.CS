@@ -95,6 +95,31 @@ namespace TallerIDWM.src.Repositories
             return product;
         }
 
+
+        public async Task<Product> UpdateProduct(int id, Product product)
+        {
+            var productInDb = await GetProductById(id);
+            if (productInDb == null)
+            {
+                throw new KeyNotFoundException($"Producto {id} no encontrado");
+            }
+
+            if (await ExistProduct(product.Name, product.CategoryId) && (productInDb.Name != product.Name || productInDb.CategoryId != product.CategoryId))
+            {
+                throw new Exception("Ya existe un producto con ese nombre y categoría");
+            }
+
+            productInDb.Name = product.Name;
+            productInDb.Price = product.Price;
+            productInDb.Stock = product.Stock;
+            productInDb.ImageUrl = product.ImageUrl;
+            productInDb.CategoryId = product.CategoryId;
+
+            _context.Products.Update(productInDb);
+            await _context.SaveChangesAsync();
+            return productInDb;
+        }
+
     }
 
     
