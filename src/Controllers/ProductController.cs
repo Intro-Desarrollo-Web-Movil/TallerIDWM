@@ -115,6 +115,54 @@ namespace TallerIDWM.src.Controllers
         }
 
 
+        [HttpPut("{id}")]
+        [Authorize (Roles = "Admin")]
+
+        public async Task<IResult> UpdateProduct(int id, [FromBody] Product product, IFormFile file)
+        {
+
+            if(!ModelState.IsValid)
+            {
+                return TypedResults.BadRequest(ModelState);
+            }
+
+
+            var updatedProduct = await _productRepository.GetProductById(id);
+            if(updatedProduct == null)
+            {
+                return TypedResults.NotFound("Producto no encontrado");
+            }
+
+            ImageUploadResult? uploadResult = null;
+            if(product.ImageUrl != null)
+            {
+                if(!string.IsNullOrEmpty(updatedProduct.ImageUrl))
+                {
+                    var publicId = updatedProduct.ImageUrl.Split("/").Last().Split(".").First();
+                    await _photoService.DeletePhotoAsync(publicId);
+                }
+
+                uploadResult = await _photoService.AddPhotoAsync(file);
+                if (uploadResult.Error != null)
+                {
+                    return TypedResults.BadRequest(uploadResult.Error.Message);
+                }
+
+            }
+
+            var productDto = new ProductDto
+            {
+                ProductId = updatedProduct.ProductId,
+                Name = updatedProduct.Name,
+                Price = updatedProduct.Price,
+                Stock = updatedProduct.Stock,
+                ImageUrl = updatedProduct.ImageUrl
+            };
+
+            return TypedResults.Ok(productDto);
+        }
+
+
         [HttpPost]
         [Authorize (Roles = "Admin")]
         public async Task<IResult> CreateProduct([FromForm] Product product, IFormFile file)
