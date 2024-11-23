@@ -2,6 +2,8 @@ using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using TallerIDWM.src.Data;
 using TallerIDWM.src.Interfaces;
+using TallerIDWM.src.Services;
+using TallerIDWM.src.Helpers;
 using TallerIDWM.src.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,10 @@ Env.Load();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 

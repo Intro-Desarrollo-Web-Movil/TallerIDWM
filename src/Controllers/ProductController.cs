@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TallerIDWM.src.Interfaces;
 using TallerIDWM.src.Models;
 using Microsoft.EntityFrameworkCore;
+using CloudinaryDotNet.Actions;
 using TallerIDWM.src.DTOs;
 using TallerIDWM.src.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -18,13 +19,15 @@ namespace TallerIDWM.src.Controllers
     [Route("api/product")]
     [ApiController]
 
-    public class ProductController
+    public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly IPhotoService _photoService;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository , IPhotoService photoService)
         {
             _productRepository = productRepository;
+            _photoService = photoService;
         }
 
 
@@ -110,6 +113,35 @@ namespace TallerIDWM.src.Controllers
 
             return TypedResults.Ok(productDto);
         }
+
+
+        [HttpPost]
+        [Authorize (Roles = "Admin")]
+        public async Task<IResult> CreateProduct([FromForm] Product product, IFormFile file)
+        {
+            if (await _productRepository.ExistProduct(product.Name, product.CategoryId))
+            {
+                return TypedResults.BadRequest("Ya existe un producto con ese nombre en la categoría seleccionada.");
+            }
+
+            var uploadResult = await _photoService.AddPhotoAsync(file);
+
+            product.ImageUrl = uploadResult.Url.ToString();
+
+            var newProduct = await _productRepository.CreateProduct(product);
+
+            var productDto = new ProductDto
+            {
+                ProductId = newProduct.ProductId,
+                Name = newProduct.Name,
+                Price = newProduct.Price,
+                Stock = newProduct.Stock,
+                ImageUrl = newProduct.ImageUrl
+            };
+
+            return TypedResults.Ok(productDto);
+        }
+
     }
 
 }

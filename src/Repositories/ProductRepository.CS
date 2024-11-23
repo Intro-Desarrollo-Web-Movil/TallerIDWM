@@ -78,6 +78,23 @@ namespace TallerIDWM.src.Repositories
             
         }
 
+        public async Task<bool> ExistProduct(string name, int CategoryType)
+        {
+            return await _context.Products.AnyAsync(p => p.Name == name && p.CategoryId == CategoryType);
+        }
+
+        public async Task<Product> CreateProduct(Product product)
+        {
+            if(await ExistProduct(product.Name, product.CategoryId))
+            {
+                throw new Exception("Ya existe un producto con ese nombre y categoría");
+            }
+            
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return product;
+        }
+
     }
 
     
