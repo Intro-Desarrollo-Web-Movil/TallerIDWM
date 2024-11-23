@@ -38,6 +38,11 @@ namespace TallerIDWM.src.Controllers
 
             var products = await _productRepository.GetAllProducts(name, Category, sort);
 
+            if (products == null || !products.Any())
+            {
+                return TypedResults.NotFound("No se encontraron productos.");
+            }
+
             var productDtos = products.Select(p => new ProductDto
             {
                 ProductId = p.ProductId,
