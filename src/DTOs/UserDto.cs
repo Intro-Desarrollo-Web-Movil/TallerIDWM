@@ -10,22 +10,16 @@ namespace TallerIDWM.src.DTOs
 {
     public class UserDto
     {
-        
-        public required int UserId { get; set; }
+
+        public required int UserId {get;set;}   
         [StringLength(255, MinimumLength = 8)]
         public required string Name { get; set; }
         [EmailAddress]
         public required string Email { get; set; }
-        [StringLength(20, MinimumLength = 8)]
-        public required string Password { get; set; }
         [Birthdate]
         public required DateOnly BirthDate { get; set; }
         public bool IsActive { get; set; }
-        
-        public int RoleId { get; set; } 
         public required Role role {get; set;}
-
-        public int GenderId { get; set; } 
         public required Gender Gender { get; set; }
         [Rut]
         public required string Rut {get;set;}

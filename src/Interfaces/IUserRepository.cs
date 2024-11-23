@@ -16,5 +16,6 @@ namespace TallerIDWM.src.Interfaces
         Task<UserDto> UpdateUser(int id, UpdateUserDto updateUserDto);
         Task<UserDto> GetCurrentUser();
         Task<UserDto> UpdateUserStatus(int id, bool IsActive);
+        Task<UserDto?> GetUserByEmail(string email);
     }
 }

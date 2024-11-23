@@ -14,7 +14,7 @@ namespace TallerIDWM.src.Models
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public DateOnly BirthDate { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
 
 

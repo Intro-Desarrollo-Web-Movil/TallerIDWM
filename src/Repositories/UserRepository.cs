@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TallerIDWM.src.Data;
 using TallerIDWM.src.DTOs;
@@ -19,11 +20,14 @@ namespace TallerIDWM.src.Repositories
             _context = context;
         }
 
-        public  Task<UserDto> CreateUser(CreateUserDto createUserDto)
+        public async Task<UserDto> CreateUser(CreateUserDto createUserDto)
         {
+            var user = UserMapper.toUserFromCreateUser(createUserDto);
+            await _context.Users.AddAsync(user);
             throw new NotImplementedException();
         }
 
+        // Método para eliminar un usuario: Testeado 
         public async Task<UserDto> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id)
@@ -34,10 +38,11 @@ namespace TallerIDWM.src.Repositories
             return UserMapper.toUserDto(user);
         }
 
+        //método para obtener todos los usuarios: Testeado
         public async Task<List<User>> GetAllUser()
         {
             IQueryable<User> userQuery = _context.Users;
-            var users = await userQuery.Include(u => u.Gender).ToListAsync();
+           // var users = await userQuery.Include(u => u.Gender).ToListAsync();
             return await _context.Users.ToListAsync();
         }
 
@@ -58,6 +63,7 @@ namespace TallerIDWM.src.Repositories
             throw new NotImplementedException();
         }
 
+        //Método pr actualizar el estado de la cuenta: Testeado
         public async Task<UserDto> UpdateUserStatus(int id, bool IsActive)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == id)
@@ -67,6 +73,11 @@ namespace TallerIDWM.src.Repositories
             await _context.SaveChangesAsync();
 
             return UserMapper.toUserDto(user);
+        }
+
+        public async Task<UserDto?> GetUserByEmail(string email){
+            var user = _context.Users.FirstOrDefault(U=> U.Email == email);
+            return user is null ? null : UserMapper.toUserDto(user);
         }
     }
 }
