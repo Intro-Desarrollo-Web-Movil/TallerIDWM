@@ -24,10 +24,16 @@ namespace TallerIDWM.src.Repositories
         {
             var user = UserMapper.toUserFromCreateUser(createUserDto);
             await _context.Users.AddAsync(user);
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
+            return  UserMapper.toUserDto(user);
         }
 
-        // Método para eliminar un usuario: Testeado 
+        /// <summary>
+        /// Método que permite eliminar un usuario del sistema
+        /// </summary>
+        /// <param name="id">id único del usuario</param>
+        /// <returns>el usuario eliminado como DTO</returns>
+        /// <exception cref="Exception"></exception> <summary>
         public async Task<UserDto> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id)
@@ -38,7 +44,10 @@ namespace TallerIDWM.src.Repositories
             return UserMapper.toUserDto(user);
         }
 
-        //método para obtener todos los usuarios: Testeado
+        /// <summary>
+        /// Método para obtener todos los usuarios del sistema
+        /// </summary>
+        /// <returns>todos los usuarios del sistema</returns> <summary>
         public async Task<List<User>> GetAllUser()
         {
             IQueryable<User> userQuery = _context.Users;
@@ -51,6 +60,11 @@ namespace TallerIDWM.src.Repositories
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Métodod que obtiene al usuario mediante su ID
+        /// </summary>
+        /// <param name="id">id único del usuario</param>
+        /// <returns>DTO del usuario con el identificador dado</returns>
         public async Task<UserDto?> GetUserById(int id)
         {
             var user = await _context.Users.Include(u=> u.Gender)
@@ -63,7 +77,12 @@ namespace TallerIDWM.src.Repositories
             throw new NotImplementedException();
         }
 
-        //Método pr actualizar el estado de la cuenta: Testeado
+        /// <summary>
+        /// Método que actualiza el estado del usuario en el sistema
+        /// </summary>
+        /// <param name="id">id único del usuario</param>
+        /// <param name="IsActive">atributo booleano que indica si el usuario está activo o deshabilitado</param>
+        /// <returns>Dto del usuario actualizado</returns>
         public async Task<UserDto> UpdateUserStatus(int id, bool IsActive)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == id)
@@ -75,8 +94,13 @@ namespace TallerIDWM.src.Repositories
             return UserMapper.toUserDto(user);
         }
 
+        /// <summary>
+        /// Método que obtiene a un usuario mediante su email
+        /// </summary>
+        /// <param name="email"> correo eléctronico del usuario</param>
+        /// <returns>retorna si encuentra un usuario o no</returns>
         public async Task<UserDto?> GetUserByEmail(string email){
-            var user = _context.Users.FirstOrDefault(U=> U.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(U=> U.Email == email);
             return user is null ? null : UserMapper.toUserDto(user);
         }
     }

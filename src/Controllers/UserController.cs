@@ -7,21 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 using TallerIDWM.src.Data;
 using TallerIDWM.src.DTOs;
 using TallerIDWM.src.Interfaces;
-using TallerIDWM.src.Mappers;
-using TallerIDWM.src.Models;
 using TallerIDWM.src.Repositories;
+
 
 namespace TallerIDWM.src.Controllers
 {
     public class UserController: BaseApiController
     {
         private readonly IUserRepository _userRepository;
-        private readonly IGenderRepository _genderRepository;
 
 
-        public UserController (IUserRepository userRepository, GenderRepository genderRepository){
+        /// <summary>
+        /// Constructor de la clase  UserController
+        /// </summary>
+        /// <param name="userRepository">repostiorio del usuario</param>
+        /// <param name="genderRepository">repositorio del género</param> <summary>
+        public UserController (IUserRepository userRepository){
             _userRepository = userRepository;
-            _genderRepository = genderRepository;
 
         }
 
@@ -60,10 +62,6 @@ namespace TallerIDWM.src.Controllers
             var email = createUserDto.Email;
             if(await _userRepository.GetUserByEmail(email) is not null){
                 return Conflict("El email ya está registrado en el sistema");
-            }
-            var gender = createUserDto.Gender;
-            if (!await _genderRepository.ExistGender(gender)){
-                return BadRequest("El género no existe.");
             }
             var user = await _userRepository.CreateUser(createUserDto);
 

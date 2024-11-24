@@ -10,10 +10,10 @@ namespace TallerIDWM.src.DTOs
     {
         
         [StringLength(20, MinimumLength = 8)]
-        public required string CurrentPassword {get; set;}
+        public required string CurrentPassword {get; set;} = null!;
         [StringLength(20, MinimumLength = 8)]
-        public required string NewPassword {get; set;}
+        public required string NewPassword {get; set;} = null!;
         [StringLength(20, MinimumLength = 8)]
-        public required string ConfirmPassword {get; set;}
+        public required string ConfirmPassword {get; set;} = null!;
     }
 }

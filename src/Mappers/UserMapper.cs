@@ -9,7 +9,11 @@ namespace TallerIDWM.src.Mappers
 {
     public static class UserMapper
     {
-        // Para retornar datos al client
+        /// <summary>
+        /// Método para pasar de entidad usuario a DTO 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns> <summary>
         public static UserDto toUserDto (this User user){
             return new UserDto {
                 UserId = user.UserId,
@@ -22,6 +26,12 @@ namespace TallerIDWM.src.Mappers
                 Rut = user.Rut
             };
         }
+
+        /// <summary>
+        /// Método para pasar de userDto a entidad usuario
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
         public static User toUser (this UserDto userDto){
             return new User {
                 Name = userDto.Name,
@@ -34,6 +44,11 @@ namespace TallerIDWM.src.Mappers
             };
         }
 
+        /// <summary>
+        /// Método para pasar de createdUserDto a entidad usuario
+        /// </summary>
+        /// <param name="createUserDto"></param>
+        /// <returns></returns> <summary>
         public static User toUserFromCreateUser (this CreateUserDto createUserDto){
             return new User {
                 Name = createUserDto.Name,

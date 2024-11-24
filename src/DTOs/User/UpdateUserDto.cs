@@ -11,10 +11,10 @@ namespace TallerIDWM.src.DTOs
     public class UpdateUserDto
     {
         [StringLength(255, MinimumLength = 8)]
-        public required string Name { get; set; }
+        public required string Name { get; set; } = null!;
         [Birthdate]
         public required DateOnly BirthDate { get; set; }
-        public int GenderId { get; set; } 
-        public required Gender Gender { get; set; }
+        public required int GenderId { get; set; }
+        public required Gender Gender { get; set; } = null!;
     }
 }

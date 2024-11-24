@@ -19,8 +19,9 @@
         "IsActive": true,
         "RoleId": 2,
         "GenderId": 1,
-        "Rut": "23.456.789-0"
+        "Rut" : "23.456.789-0"
     },
+
     {
         "UserId": 3,
         "Name": "Admin User",
