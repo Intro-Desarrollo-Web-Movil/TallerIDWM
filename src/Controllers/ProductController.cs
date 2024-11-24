@@ -32,14 +32,15 @@ namespace TallerIDWM.src.Controllers
 
 
         [HttpGet("")]
-        public async Task<IResult> GetAllProducts(string? name, int? Category, string? sort)
+        public async Task<IResult> GetAllProducts(string? name, int? Category, string? sort, int pageSize, int pageNumber, bool OutOfStock = false)
         {
             if (sort != null && sort.ToLower() != "asc" && sort.ToLower() != "desc")
         {
             return TypedResults.BadRequest("El valor de 'sort' debe ser 'asc' o 'desc'.");
         }
 
-            var products = await _productRepository.GetAllProducts(name, Category, sort);
+            var products = await _productRepository.GetAllProducts(name, Category, sort, 10, 1, OutOfStock: false);
+            var totalItems = await _productRepository.CountProducts(name, Category, OutOfStock: false);
 
             if (products == null || !products.Any())
             {
@@ -55,7 +56,13 @@ namespace TallerIDWM.src.Controllers
                 ImageUrl = p.ImageUrl
             }).ToList();
 
-            return TypedResults.Ok(productDtos);
+            return TypedResults.Ok(new 
+            { 
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Products = productDtos
+            });
         }
 
 

@@ -18,9 +18,15 @@ namespace TallerIDWM.src.Repositories
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllProducts(string? name, int? Category, string? sort)
+        public async Task<IEnumerable<Product>> GetAllProducts(string? name, int? Category, string? sort, int pageSize, int pageNumber, bool OutOfStock = false)
         {
             var products = await _context.Products.ToListAsync();
+
+
+            if(!OutOfStock)
+            {
+                products = products.Where(u => u.Stock == 0).ToList();
+            }
 
             if(!string.IsNullOrEmpty(name))
             {
@@ -42,7 +48,30 @@ namespace TallerIDWM.src.Repositories
                 products = products.OrderByDescending(u => u.Price).ToList();
             }
 
-            return products;
+            return await Task.FromResult(products.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList());
+        }
+
+
+        public async Task<int> CountProducts(string? name, int? Category, bool OutOfStock = false)
+        {
+            var products = await _context.Products.ToListAsync();
+
+            if(!OutOfStock)
+            {
+                products = products.Where(u => u.Stock == 0).ToList();
+            }
+
+            if(!string.IsNullOrEmpty(name))
+            {
+                products = products.Where(u => u.Name.ToLower().Contains(name.ToLower())).ToList();
+            }
+
+            if(!string.IsNullOrEmpty(Category.ToString()))
+            {
+                products = products.Where(u => u.CategoryId == Category).ToList();
+            }
+
+            return products.Count();
         }
 
 

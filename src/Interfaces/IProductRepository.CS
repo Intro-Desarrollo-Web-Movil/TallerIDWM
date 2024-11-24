@@ -11,9 +11,11 @@ namespace TallerIDWM.src.Interfaces
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetAllProducts(string? name, int? Category, string? sort);
+        Task<IEnumerable<Product>> GetAllProducts(string? name, int? Category, string? sort , int pageSize, int pageNumber, bool OutOfStock = false);
 
         Task<Product>GetProductById(int id);
+
+        Task<int> CountProducts(string? name, int? Category, bool OutOfStock = false);
 
         Task<List<Product>> GetAllProductAdmin();
 
