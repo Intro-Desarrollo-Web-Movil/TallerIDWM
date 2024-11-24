@@ -117,6 +117,14 @@ namespace TallerIDWM.src.Repositories
             {
                 throw new Exception("Ya existe un producto con ese nombre y categoría");
             }
+
+            var existingCategory = await _context.Categories.FindAsync(product.CategoryId);
+            if (existingCategory == null)
+            {
+                throw new InvalidOperationException("La categoría especificada no existe.");
+            }
+
+            product.Category = existingCategory;
             
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
@@ -135,6 +143,12 @@ namespace TallerIDWM.src.Repositories
             if (await ExistProduct(product.Name, product.CategoryId) && (productInDb.Name != product.Name || productInDb.CategoryId != product.CategoryId))
             {
                 throw new Exception("Ya existe un producto con ese nombre y categoría");
+            }
+
+            var existingCategory = await _context.Categories.FindAsync(product.CategoryId);
+            if (existingCategory == null)
+            {
+                throw new InvalidOperationException("La categoría especificada no existe. xddd");
             }
 
             productInDb.Name = product.Name;

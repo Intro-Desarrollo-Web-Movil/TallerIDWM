@@ -103,7 +103,7 @@ namespace TallerIDWM.src.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize (Roles = "Admin")]
+        
 
         public async Task<IResult> DeleteProductById(int id)
         {
@@ -117,15 +117,19 @@ namespace TallerIDWM.src.Controllers
                 Stock = product.Stock,
                 ImageUrl = product.ImageUrl,
             };
+            
 
-            return TypedResults.Ok(productDto);
+            return TypedResults.Ok(new 
+            {
+               Message = "Producto eliminado exitosamente",
+                Product = productDto
+            });
         }
 
 
         [HttpPut("{id}")]
-        [Authorize (Roles = "Admin")]
 
-        public async Task<IResult> UpdateProduct(int id, [FromBody] Product product, IFormFile file)
+        public async Task<IResult> UpdateProduct(int id, [FromForm] Product updateProduct, IFormFile? file)
         {
 
             if(!ModelState.IsValid)
@@ -134,54 +138,70 @@ namespace TallerIDWM.src.Controllers
             }
 
 
-            var updatedProduct = await _productRepository.GetProductById(id);
-            if(updatedProduct == null)
+            var productToUpdate = await _productRepository.GetProductById(id);
+            if(productToUpdate == null)
             {
                 return TypedResults.NotFound("Producto no encontrado");
             }
 
             ImageUploadResult? uploadResult = null;
-            if(product.ImageUrl != null)
+            if(file != null)
             {
-                if(!string.IsNullOrEmpty(updatedProduct.ImageUrl))
+                if(!string.IsNullOrEmpty(productToUpdate.ImageUrl))
                 {
-                    var publicId = updatedProduct.ImageUrl.Split("/").Last().Split(".").First();
+                    var publicId = productToUpdate.ImageUrl.Split("/").Last().Split(".").First();
                     await _photoService.DeletePhotoAsync(publicId);
                 }
 
+
                 uploadResult = await _photoService.AddPhotoAsync(file);
-                if (uploadResult.Error != null)
+                if (uploadResult != null && uploadResult.Error != null)
                 {
                     return TypedResults.BadRequest(uploadResult.Error.Message);
                 }
 
+                if (uploadResult != null && uploadResult.Url != null)
+                {
+                    productToUpdate.ImageUrl = uploadResult.Url.ToString();
+                }
+
             }
+
+            var updatedProductEntity = await _productRepository.UpdateProduct(id, updateProduct);
+
 
             var productDto = new ProductDto
             {
-                ProductId = updatedProduct.ProductId,
-                Name = updatedProduct.Name,
-                Price = updatedProduct.Price,
-                Stock = updatedProduct.Stock,
-                ImageUrl = updatedProduct.ImageUrl
+                ProductId = updatedProductEntity.ProductId,
+                Name = updatedProductEntity.Name,
+                Price = updatedProductEntity.Price,
+                Stock = updatedProductEntity.Stock,
+                ImageUrl = updatedProductEntity.ImageUrl
             };
 
-            return TypedResults.Ok(productDto);
+        
+            return TypedResults.Ok(new
+            {
+                Message = "Producto actualizado exitosamente.",
+                Product = updatedProductEntity
+            });
         }
 
 
         [HttpPost]
-        [Authorize (Roles = "Admin")]
-        public async Task<IResult> CreateProduct([FromForm] Product product, IFormFile file)
+        
+        public async Task<IResult> CreateProduct([FromForm] Product product, IFormFile? file)
         {
             if (await _productRepository.ExistProduct(product.Name, product.CategoryId))
             {
                 return TypedResults.BadRequest("Ya existe un producto con ese nombre en la categoría seleccionada.");
             }
 
-            var uploadResult = await _photoService.AddPhotoAsync(file);
-
-            product.ImageUrl = uploadResult.Url.ToString();
+            if (file != null)
+            {
+                var uploadResult = await _photoService.AddPhotoAsync(file);
+                product.ImageUrl = uploadResult.Url.ToString();
+            }
 
             var newProduct = await _productRepository.CreateProduct(product);
 
@@ -195,6 +215,7 @@ namespace TallerIDWM.src.Controllers
             };
 
             return TypedResults.Ok(productDto);
+            
         }
 
     }
