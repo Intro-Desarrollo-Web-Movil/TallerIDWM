@@ -22,10 +22,9 @@ namespace TallerIDWM.src.Repositories
         {
             var products = await _context.Products.ToListAsync();
 
-
             if(!OutOfStock)
             {
-                products = products.Where(u => u.Stock == 0).ToList();
+                products = products.Where(u => u.Stock > 0).ToList();
             }
 
             if(!string.IsNullOrEmpty(name))
@@ -58,7 +57,7 @@ namespace TallerIDWM.src.Repositories
 
             if(!OutOfStock)
             {
-                products = products.Where(u => u.Stock == 0).ToList();
+                products = products.Where(u => u.Stock > 0).ToList();
             }
 
             if(!string.IsNullOrEmpty(name))

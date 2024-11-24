@@ -32,7 +32,7 @@ namespace TallerIDWM.src.Controllers
 
 
         [HttpGet("")]
-        public async Task<IResult> GetAllProducts(string? name, int? Category, string? sort, int pageSize, int pageNumber, bool OutOfStock = false)
+        public async Task<IResult> GetAllProducts(string? name, int? Category, string? sort, int pageSize = 10, int pageNumber = 1, bool OutOfStock = false)
         {
             if (sort != null && sort.ToLower() != "asc" && sort.ToLower() != "desc")
         {
