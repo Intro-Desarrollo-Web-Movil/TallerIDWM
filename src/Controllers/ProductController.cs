@@ -103,7 +103,7 @@ namespace TallerIDWM.src.Controllers
         }
 
         [HttpDelete("{id}")]
-        
+        [Authorize(Roles = "Admin")]
 
         public async Task<IResult> DeleteProductById(int id)
         {
@@ -128,7 +128,7 @@ namespace TallerIDWM.src.Controllers
 
 
         [HttpPut("{id}")]
-
+        [Authorize(Roles = "Admin")]
         public async Task<IResult> UpdateProduct(int id, [FromForm] Product updateProduct, IFormFile? file)
         {
 
@@ -189,7 +189,7 @@ namespace TallerIDWM.src.Controllers
 
 
         [HttpPost]
-        
+        [Authorize(Roles = "Admin")]
         public async Task<IResult> CreateProduct([FromForm] Product product, IFormFile? file)
         {
             if (await _productRepository.ExistProduct(product.Name, product.CategoryId))
