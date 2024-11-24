@@ -19,15 +19,6 @@ namespace TallerIDWM.src.Controllers
         _userManager = userManager;
       }
 
-      [HttpPost("login")]
-
-      public async Task<IActionResult> Login(LoginDto loginDto){
-        try{
-            if(!ModelState.IsValid) return BadRequest(ModelState);
-
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
-
-        }
-      }
+    
     }
 }

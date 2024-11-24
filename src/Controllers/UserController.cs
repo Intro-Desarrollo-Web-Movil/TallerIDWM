@@ -58,7 +58,7 @@ namespace TallerIDWM.src.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto){
+        public async Task<IActionResult> CreateUser([FromForm] CreateUserDto createUserDto){
             var email = createUserDto.Email;
             if(await _userRepository.GetUserByEmail(email) is not null){
                 return Conflict("El email ya está registrado en el sistema");
