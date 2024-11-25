@@ -44,8 +44,13 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
+
+// Registro de servicios y repositorios
+
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ShoppingCartService>();
+builder.Services.AddScoped<ShoppingCartRepository>();
 
 var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY")!);
 
@@ -115,5 +120,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
+
+
 app.Run();
 
