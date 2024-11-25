@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Proyectos\\DWM\\TallerIDWB\\TallerIDWM\\api.csproj": {}
+    "C:\\Users\\axel0\\Desktop\\taller 1\\TallerIDWM\\api.csproj": {}
   },
   "projects": {
-    "D:\\Proyectos\\DWM\\TallerIDWB\\TallerIDWM\\api.csproj": {
+    "C:\\Users\\axel0\\Desktop\\taller 1\\TallerIDWM\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Proyectos\\DWM\\TallerIDWB\\TallerIDWM\\api.csproj",
+        "projectUniqueName": "C:\\Users\\axel0\\Desktop\\taller 1\\TallerIDWM\\api.csproj",
         "projectName": "api",
-        "projectPath": "D:\\Proyectos\\DWM\\TallerIDWB\\TallerIDWM\\api.csproj",
-        "packagesPath": "C:\\Users\\josea\\.nuget\\packages\\",
-        "outputPath": "D:\\Proyectos\\DWM\\TallerIDWB\\TallerIDWM\\obj\\",
+        "projectPath": "C:\\Users\\axel0\\Desktop\\taller 1\\TallerIDWM\\api.csproj",
+        "packagesPath": "C:\\Users\\axel0\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\axel0\\Desktop\\taller 1\\TallerIDWM\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\josea\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\axel0\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -113,7 +111,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
