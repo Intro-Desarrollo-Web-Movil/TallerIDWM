@@ -110,6 +110,35 @@ namespace TallerIDWM.src.Controllers
             }
         }
 
+        // POST : Finalizar la compra de un carrito.
+        [HttpPost("{cartId}/checkout")]
+        public async Task<IActionResult> Checkout(int cartId, [FromBody] int userId)
+        {
+            try
+            {
+                var invoice = await _shoppingCartService.FinalizePurchase(cartId, userId);
+                return Ok(new
+                {
+                    Message = "Compra realizada con éxito.",
+                    InvoiceId = invoice.InvoiceId,
+                    Total = invoice.Total
+                });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
+
+
         
 
 

@@ -46,6 +46,7 @@ public class DataSeeder
 
         var shoppingCarts = context.ShoppingCarts
             .Include(sc => sc.CartDetail)
+            .ThenInclude(cd => cd.Product) // Asegúrate de incluir los productos
             .ToList();
 
         foreach (var cart in shoppingCarts)

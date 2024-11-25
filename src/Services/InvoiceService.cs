@@ -11,10 +11,12 @@ namespace TallerIDWM.src.Services
     {
 
         private readonly InvoiceRepository _invoiceRepository;
+        private readonly UserRepository _userRepository;
 
-        public InvoiceService(InvoiceRepository invoiceRepository)
+        public InvoiceService(InvoiceRepository invoiceRepository, UserRepository userRepository)
         {
             _invoiceRepository = invoiceRepository;
+            _userRepository = userRepository;
         }
         
         /**
@@ -22,11 +24,18 @@ namespace TallerIDWM.src.Services
         */
         public async Task<Invoice> CreateInvoiceFromCart(ShoppingCart cart, int userId)
         {
+             // Obtener el usuario asociado
+            var user = await _userRepository.GetUserById(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("Usuario no encontrado.");
+            }
+
             // Crear la boleta
             var invoice = new Invoice
             {
-                UserId = userId,
-                User = await _invoiceRepository.GetUserById(userId),
+                UserId = user.UserId,
+                User = user,
                 PurchaseDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 Total = cart.CartDetail.Sum(cd => cd.Quantity * cd.Product.Price)
             };

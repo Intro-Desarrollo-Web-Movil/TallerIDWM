@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TallerIDWM.src.DTOs;
 
 namespace TallerIDWM.src.Models
 {
@@ -14,7 +15,7 @@ namespace TallerIDWM.src.Models
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public DateOnly BirthDate { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
 
 
@@ -28,6 +29,12 @@ namespace TallerIDWM.src.Models
         // Relación User y Gender
         public int GenderId { get; set; } // FK Gender
         public Gender Gender { get; set; } = null!; // Relación a 1
-    
+
+        public string Rut {get; set;} = null!;
+
+        public static implicit operator User(UserDto v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,11 +8,11 @@ using TallerIDWM.src.Data;
 
 #nullable disable
 
-namespace api.src.Data.Migrations
+namespace api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241118064358_FixedRelationships")]
-    partial class FixedRelationships
+    [Migration("20241125023634_AddUserInvoiceRelationship2")]
+    partial class AddUserInvoiceRelationship2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,6 +118,8 @@ namespace api.src.Data.Migrations
 
                     b.HasIndex("InvoiceId");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("InvoiceDetails");
                 });
 
@@ -136,6 +138,7 @@ namespace api.src.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Price")
@@ -212,6 +215,10 @@ namespace api.src.Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Rut")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("UserId");
 
                     b.HasIndex("GenderId");
@@ -253,22 +260,32 @@ namespace api.src.Data.Migrations
 
             modelBuilder.Entity("TallerIDWM.src.Models.InvoiceDetail", b =>
                 {
-                    b.HasOne("TallerIDWM.src.Models.Invoice", null)
+                    b.HasOne("TallerIDWM.src.Models.Invoice", "Invoice")
                         .WithMany("InvoiceDetails")
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("TallerIDWM.src.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TallerIDWM.src.Models.Product", b =>
                 {
-                    b.HasOne("TallerIDWM.src.Models.Category", "Categoty")
+                    b.HasOne("TallerIDWM.src.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Categoty");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("TallerIDWM.src.Models.ShoppingCart", b =>

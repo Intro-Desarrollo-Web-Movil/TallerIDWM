@@ -12,12 +12,14 @@ namespace TallerIDWM.src.Services
         // Repositorio que permite interactuar con la base de datos para gestionar el carrito.
         private readonly ShoppingCartRepository _cartRepository;
         private readonly InvoiceService _invoiceService; // Agregado: Servicio para manejar boletas
+        private readonly UserRepository _userRepository;
 
         // Constructor para inyectar el repositorio de carrito.
-        public ShoppingCartService(ShoppingCartRepository cartRepository, InvoiceService invoiceService)
+        public ShoppingCartService(ShoppingCartRepository cartRepository, InvoiceService invoiceService, UserRepository userRepository)
         {
             _cartRepository = cartRepository;
             _invoiceService = invoiceService; // Inicializar el servicio de boletas
+            _userRepository = userRepository;
         }
 
         // Método principal para agregar un producto al carrito.
@@ -114,20 +116,31 @@ namespace TallerIDWM.src.Services
         */
         public async Task<Invoice> FinalizePurchase(int cartId, int userId)
         {
+            // Verificar que el usuario exista
+            var user = await _userRepository.GetUserById(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("Usuario no encontrado.");
+            }
+
             // Obtener el carrito
             var cart = await _cartRepository.GetCartById(cartId);
             if (cart == null || !cart.CartDetail.Any())
+            {
                 throw new InvalidOperationException("El carrito está vacío o no existe.");
+            }
 
-            // Delegar la creación de la boleta al servicio de Invoice
+            // Crear la boleta
             var invoice = await _invoiceService.CreateInvoiceFromCart(cart, userId);
 
-            // Vaciar el carrito después de crear la boleta
+            // Vaciar el carrito después de la compra
             cart.CartDetail.Clear();
             await _cartRepository.SaveChangesAsync();
 
             return invoice;
         }
+
+
 
 
         

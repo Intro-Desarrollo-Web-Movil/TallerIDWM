@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace api.src.Data.Migrations
+namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class firstMigration : Migration
+    public partial class AddUserInvoiceRelationship2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,7 +56,7 @@ namespace api.src.Data.Migrations
                 {
                     ProductId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
                     Price = table.Column<int>(type: "INTEGER", nullable: false),
                     Stock = table.Column<int>(type: "INTEGER", nullable: false),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
@@ -85,7 +85,8 @@ namespace api.src.Data.Migrations
                     BirthDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     RoleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    GenderId = table.Column<int>(type: "INTEGER", nullable: false)
+                    GenderId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rut = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,6 +165,12 @@ namespace api.src.Data.Migrations
                         principalTable: "Invoices",
                         principalColumn: "InvoiceId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InvoiceDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,7 +181,6 @@ namespace api.src.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     CartId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ShoppingCartCartId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -185,14 +191,19 @@ namespace api.src.Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CartDetails_ShoppingCarts_ShoppingCartCartId",
-                        column: x => x.ShoppingCartCartId,
+                        name: "FK_CartDetails_ShoppingCarts_CartId",
+                        column: x => x.CartId,
                         principalTable: "ShoppingCarts",
                         principalColumn: "CartId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartDetails_CartId",
+                table: "CartDetails",
+                column: "CartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartDetails_ProductId",
@@ -200,14 +211,14 @@ namespace api.src.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartDetails_ShoppingCartCartId",
-                table: "CartDetails",
-                column: "ShoppingCartCartId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_InvoiceDetails_InvoiceId",
                 table: "InvoiceDetails",
                 column: "InvoiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetails_ProductId",
+                table: "InvoiceDetails",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoices_UserId",
@@ -245,19 +256,19 @@ namespace api.src.Data.Migrations
                 name: "InvoiceDetails");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
                 name: "Invoices");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Genders");
