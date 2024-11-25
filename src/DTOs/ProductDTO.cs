@@ -17,6 +17,5 @@ namespace TallerIDWM.src.DTOs
         [Range(0, 99999, ErrorMessage = "El stock debe ser mayor o igual a 0 y menor que 100 mil")]
         public int Stock { get; set; } // Cantidad en stock (entero mayor a 0)
         public string ImageUrl { get; set; } = string.Empty;
-    
     }
 }

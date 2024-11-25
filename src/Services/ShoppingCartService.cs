@@ -63,5 +63,53 @@ namespace TallerIDWM.src.Services
             // 6. Guardar los cambios en la base de datos a través del repositorio.
             await _cartRepository.SaveChangesAsync();
         }
+
+        /**
+        * Método para eliminar un producto del carrito.
+        */
+        public async Task RemoveProductFromCart(int cartId, int productId)
+        {
+            // Obtener el carrito por su ID
+            var cart = await _cartRepository.GetCartById(cartId);
+            if (cart == null)
+                throw new KeyNotFoundException("Carrito no encontrado.");
+
+            // Buscar el detalle del carrito que contiene el producto
+            var cartDetail = cart.CartDetail.FirstOrDefault(cd => cd.ProductId == productId);
+            if (cartDetail == null)
+                throw new KeyNotFoundException("El producto no está en el carrito.");
+
+            // Obtener el producto para actualizar el stock (opcional)
+            var product = await _cartRepository.GetProductById(productId);
+            if (product == null)
+                throw new KeyNotFoundException("Producto no encontrado.");
+
+            // Incrementar el stock del producto (opcional)
+            product.Stock += cartDetail.Quantity;
+
+            // Eliminar el detalle del carrito
+            cart.CartDetail.Remove(cartDetail);
+
+            // Guardar los cambios en la base de datos
+            await _cartRepository.SaveChangesAsync();
+        }
+
+        public async Task<ShoppingCart?> GetCartById(int cartId)
+        {
+            // Llamar al repositorio para obtener el carrito
+            var cart = await _cartRepository.GetCartById(cartId);
+
+            if (cart == null)
+            {
+                return null;
+            }
+
+            return cart;
+        }
+
+
+        
+        
+
     }
 }

@@ -52,6 +52,68 @@ namespace TallerIDWM.src.Controllers
             }
         }
 
+        // DELETE : Eliminar un CartDetail de un Producto en el Carrito.
+        [HttpDelete("{cartId}/remove/{productId}")]
+        public async Task<IActionResult> RemoveProductFromCart(int cartId, int productId)
+        {
+            try
+            {
+                // Llamar al servicio para eliminar el producto del carrito
+                await _shoppingCartService.RemoveProductFromCart(cartId, productId);
+                return Ok("Producto eliminado del carrito.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
+
+        // GET : Obtener el carrito por su ID.
+        [HttpGet("{cartId}")]
+        public async Task<IActionResult> GetCartById(int cartId)
+        {
+            try
+            {
+                // Llamada al servicio para obtener el carrito por ID
+                var cart = await _shoppingCartService.GetCartById(cartId);
+
+                if (cart == null)
+                {
+                    return NotFound("Carrito no encontrado.");
+                }
+
+                // Transformar los datos en un formato más amigable para el cliente
+                var cartDto = new
+                {
+                    CartId = cart.CartId,
+                    UserId = cart.UserId,
+                    Items = cart.CartDetail.Select(cd => new
+                    {
+                        ProductId = cd.ProductId,
+                        ProductName = cd.Product.Name,
+                        Quantity = cd.Quantity,
+                        Price = cd.Product.Price,
+                        TotalPrice = cd.Quantity * cd.Product.Price
+                    }),
+                    Total = cart.CartDetail.Sum(cd => cd.Quantity * cd.Product.Price)
+                };
+
+                return Ok(cartDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
+
+
+
+        
+
 
     }
 }

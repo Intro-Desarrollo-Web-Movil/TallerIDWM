@@ -9,6 +9,6 @@ namespace TallerIDWM.src.DTOs
     {
         // Sólo queremos enviar estos datos al cliente
         public int ProductId { get; set; }
-        public int Quantity { get; set; }
-    }
+        public int Quantity { get; set; }
+    }
 }
