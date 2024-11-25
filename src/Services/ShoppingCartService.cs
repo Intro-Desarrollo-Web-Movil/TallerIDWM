@@ -11,11 +11,13 @@ namespace TallerIDWM.src.Services
     {
         // Repositorio que permite interactuar con la base de datos para gestionar el carrito.
         private readonly ShoppingCartRepository _cartRepository;
+        private readonly InvoiceService _invoiceService; // Agregado: Servicio para manejar boletas
 
         // Constructor para inyectar el repositorio de carrito.
-        public ShoppingCartService(ShoppingCartRepository cartRepository)
+        public ShoppingCartService(ShoppingCartRepository cartRepository, InvoiceService invoiceService)
         {
             _cartRepository = cartRepository;
+            _invoiceService = invoiceService; // Inicializar el servicio de boletas
         }
 
         // Método principal para agregar un producto al carrito.
@@ -106,6 +108,29 @@ namespace TallerIDWM.src.Services
 
             return cart;
         }
+
+        /**
+        * Método para finalizar la compra y generar una boleta.
+        */
+        public async Task<Invoice> FinalizePurchase(int cartId, int userId)
+        {
+            // Obtener el carrito
+            var cart = await _cartRepository.GetCartById(cartId);
+            if (cart == null || !cart.CartDetail.Any())
+                throw new InvalidOperationException("El carrito está vacío o no existe.");
+
+            // Delegar la creación de la boleta al servicio de Invoice
+            var invoice = await _invoiceService.CreateInvoiceFromCart(cart, userId);
+
+            // Vaciar el carrito después de crear la boleta
+            cart.CartDetail.Clear();
+            await _cartRepository.SaveChangesAsync();
+
+            return invoice;
+        }
+
+
+        
 
 
         

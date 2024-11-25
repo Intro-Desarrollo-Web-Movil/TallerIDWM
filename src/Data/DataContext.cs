@@ -47,7 +47,20 @@ namespace TallerIDWM.src.Data
                 .WithMany()
                 .HasForeignKey(sc => sc.UserId)
                 .OnDelete(DeleteBehavior.Cascade); // Elimina carrito si se elimina el usuario
+
+            // Configurar la relación entre InvoiceDetail y Product
+            modelBuilder.Entity<InvoiceDetail>()
+                .HasOne(id => id.Product) // Relación con Product
+                .WithMany() // Un producto puede estar en muchos detalles
+                .HasForeignKey(id => id.ProductId); // FK hacia Product
+
+            // Configurar la relación entre InvoiceDetail y Invoice
+            modelBuilder.Entity<InvoiceDetail>()
+                .HasOne(id => id.Invoice) // Relación con Invoice
+                .WithMany(i => i.InvoiceDetails) // Una boleta tiene muchos detalles
+                .HasForeignKey(id => id.InvoiceId); // FK hacia Invoice
         }
+        
         
     }
 }

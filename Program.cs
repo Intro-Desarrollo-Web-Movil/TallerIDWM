@@ -51,6 +51,12 @@ builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<ShoppingCartRepository>();
+builder.Services.AddScoped<InvoiceService>();
+builder.Services.AddScoped<InvoiceRepository>();
+builder.Services.AddScoped<InvoiceRepository>();
+builder.Services.AddScoped<InvoiceService>();
+
+
 
 var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY")!);
 

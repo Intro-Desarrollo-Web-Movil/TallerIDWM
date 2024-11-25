@@ -55,8 +55,4 @@ namespace TallerIDWM.src.Repositories
             await _context.SaveChangesAsync();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> dev

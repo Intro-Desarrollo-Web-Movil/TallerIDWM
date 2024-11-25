@@ -12,9 +12,18 @@ namespace TallerIDWM.src.Models
         [Key]
         public int InvoiceDetailId { get; set; }
         
+        [Required]
         public int InvoiceId { get; set; }
+        public Invoice Invoice  { get; set; } = null!;
+
+        [Required]
         public int ProductId { get; set; }
+        public Product Product { get; set; } = null!;
+
+
+        [Required]
         public int Quantity { get; set; }
+        [Required]
         public int UnitPrice { get; set; }
         
         
