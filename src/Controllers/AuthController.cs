@@ -49,8 +49,8 @@ namespace TallerIDWM.src.Controllers
             }
           );
         }
-        catch(Exception e){
-          return StatusCode(500, "Error");
+        catch(Exception ex){
+          return StatusCode(500, ex.Message);
         }
       }
     }
