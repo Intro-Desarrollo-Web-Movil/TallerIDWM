@@ -23,6 +23,7 @@ namespace TallerIDWM.src.DTOs
         public required Gender Gender { get; set; }
         [Rut]
         public required string Rut {get;set;}
+        public string Token {get;set;} = null!;
     
     }
 }
