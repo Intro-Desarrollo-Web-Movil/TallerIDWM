@@ -27,10 +27,25 @@ namespace TallerIDWM.src.Data
         public DbSet<InvoiceDetail> InvoiceDetails { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Gender> Genders { get; set; } = null!;
+
+
+        
         
          protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Configurar la tabla de usuarios para que se llame "Users"
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("Users");
+            });
+
+            // Cambiar el nombre de la tabla AspNetRoles a Roles
+            modelBuilder.Entity<IdentityRole<int>>(entity =>
+            {
+                entity.ToTable(name: "Roles");
+            });
 
             // Configurar relación entre CartDetail y ShoppingCart
             modelBuilder.Entity<CartDetail>()

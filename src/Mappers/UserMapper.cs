@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TallerIDWM.src.Data;
 using TallerIDWM.src.DTOs;
 using TallerIDWM.src.Models;
 
@@ -21,11 +22,9 @@ namespace TallerIDWM.src.Mappers
                 Email = user.Email,
                 BirthDate = user.BirthDate,
                 IsActive = user.IsActive,
-                role = user.Role,
-                Gender = user.Gender,
                 Rut = user.Rut,
-                RoleId = user.RoleId,
-                GenderId = user.GenderId
+                Role = user.Role.Name,
+                Gender = user.Gender.Name
             };
         }
 
@@ -34,17 +33,24 @@ namespace TallerIDWM.src.Mappers
         /// </summary>
         /// <param name="userDto"></param>
         /// <returns></returns>
-        public static User toUser (this UserDto userDto){
-            return new User {
+        public static User toUser (this UserDto userDto, DataContext context){
+            var role = context.Roles.FirstOrDefault(r => r.Name == userDto.Role);
+            var gender = context.Genders.FirstOrDefault(g => g.Name == userDto.Gender);
+
+            if (role == null || gender == null)
+            {
+                throw new Exception("Role or Gender not found");
+            }
+
+            return new User
+            {
                 Name = userDto.Name,
                 Email = userDto.Email,
                 BirthDate = userDto.BirthDate,
                 IsActive = userDto.IsActive,
-                Role = userDto.role,
-                Gender = userDto.Gender,
                 Rut = userDto.Rut,
-                RoleId = userDto.RoleId,
-                GenderId = userDto.GenderId
+                RoleId = role.Id,
+                GenderId = gender.GenderId
             };
         }
 

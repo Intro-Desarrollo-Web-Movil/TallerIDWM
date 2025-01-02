@@ -21,5 +21,17 @@ namespace TallerIDWM.src.Repositories
         {
             return await _context.Genders.AnyAsync(x => x.Name == gender.Name);
         }
+
+        public async Task<string> GetGenderNameById(int genderId)
+        {
+            var gender = await _context.Genders.FindAsync(genderId);
+            return gender?.Name ?? throw new KeyNotFoundException("Gender not found");
+        }
+
+        public async Task<int> GetGenderIdByName(string genderName)
+        {
+            var gender = await _context.Genders.FirstOrDefaultAsync(g => g.Name == genderName);
+            return gender?.GenderId ?? throw new KeyNotFoundException("Gender not found");
+        }
     }
 }

@@ -13,11 +13,16 @@ namespace TallerIDWM.src.Services
 
         private readonly InvoiceRepository _invoiceRepository;
         private readonly UserRepository _userRepository;
+        private readonly IGenderRepository _genderRepository;
+        private readonly IRoleRepository _roleRepository;
+        
 
-        public InvoiceService(InvoiceRepository invoiceRepository, UserRepository userRepository)
+        public InvoiceService(InvoiceRepository invoiceRepository, UserRepository userRepository, IGenderRepository genderRepository, IRoleRepository roleRepository)
         {
             _invoiceRepository = invoiceRepository;
             _userRepository = userRepository;
+            _genderRepository = genderRepository;
+            _roleRepository = roleRepository;
         }
         
         /**
@@ -32,6 +37,11 @@ namespace TallerIDWM.src.Services
                 throw new KeyNotFoundException("Usuario no encontrado.");
             }
 
+            // Obtener RoleId y GenderId a partir de los nombres
+            var roleId = await _roleRepository.GetRoleIdByName(userDto.Role);
+            var genderId = await _genderRepository.GetGenderIdByName(userDto.Gender);
+
+
             // Convertir UserDto a User
             var user = new User
             {
@@ -40,8 +50,10 @@ namespace TallerIDWM.src.Services
                 Name = userDto.Name,
                 BirthDate = userDto.BirthDate,
                 IsActive = userDto.IsActive,
-                RoleId = userDto.RoleId,
-                GenderId = userDto.GenderId
+
+            
+                RoleId = roleId,
+                GenderId = genderId
             };
             // Crear la boleta
             var invoice = new Invoice

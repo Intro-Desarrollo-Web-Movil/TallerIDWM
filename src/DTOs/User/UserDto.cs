@@ -21,10 +21,8 @@ namespace TallerIDWM.src.DTOs
         [Birthdate]
         public required DateOnly BirthDate { get; set; }
         public bool IsActive { get; set; }
-        public required IdentityRole<int> role {get; set;}
-        public required int RoleId {get; set;}
-        public required Gender Gender { get; set; }
-        public required int GenderId { get; set; }
+        public required string Role {get; set;} = string.Empty;
+        public required string Gender { get; set; } = string.Empty;
         [Rut]
         public required string Rut {get;set;}
         public string Token {get;set;} = null!;

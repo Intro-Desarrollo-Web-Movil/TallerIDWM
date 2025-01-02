@@ -11,7 +11,7 @@ using TallerIDWM.src.Data;
 namespace api.src.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250102031109_firstMigration")]
+    [Migration("20250102064327_firstMigration")]
     partial class firstMigration
     {
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace api.src.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -387,7 +387,7 @@ namespace api.src.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

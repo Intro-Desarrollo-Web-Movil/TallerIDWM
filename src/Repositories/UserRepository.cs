@@ -16,6 +16,8 @@ namespace TallerIDWM.src.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
+
+
         public UserRepository(DataContext context){
             _context = context;
         }
@@ -37,22 +39,24 @@ namespace TallerIDWM.src.Repositories
         public async Task<UserDto> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id)
-            ?? throw new Exception ("El usuario no existe");
+                ?? throw new Exception("El usuario no existe");
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
-            return UserMapper.toUserDto(user);
+            return user.toUserDto();
         }
 
         /// <summary>
         /// Método para obtener todos los usuarios del sistema
         /// </summary>
         /// <returns>todos los usuarios del sistema</returns> <summary>
-        public async Task<List<User>> GetAllUser()
+        public async Task<List<UserDto>> GetAllUser()
         {
-            IQueryable<User> userQuery = _context.Users;
-           // var users = await userQuery.Include(u => u.Gender).ToListAsync();
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Gender)
+                .Select(user => user.toUserDto())
+                .ToListAsync();
         }
 
         public Task<UserDto> GetCurrentUser()

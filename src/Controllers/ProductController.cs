@@ -23,11 +23,13 @@ namespace TallerIDWM.src.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly IPhotoService _photoService;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductController(IProductRepository productRepository , IPhotoService photoService)
+        public ProductController(IProductRepository productRepository , IPhotoService photoService, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _photoService = photoService;
+            _categoryRepository = categoryRepository;
         }
 
 
@@ -53,6 +55,7 @@ namespace TallerIDWM.src.Controllers
             {
                 ProductId = p.ProductId,
                 Name = p.Name,
+                Category = _categoryRepository.GetCategoryNameById(p.CategoryId).Result,
                 Price = p.Price,
                 Stock = p.Stock,
                 ImageUrl = p.ImageUrl
@@ -78,6 +81,7 @@ namespace TallerIDWM.src.Controllers
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
+                Category = await _categoryRepository.GetCategoryNameById(product.CategoryId),
                 Price = product.Price,
                 Stock = product.Stock,
                 ImageUrl = product.ImageUrl,
@@ -98,6 +102,7 @@ namespace TallerIDWM.src.Controllers
             {
                 ProductId = p.ProductId,
                 Name = p.Name,
+                Category = _categoryRepository.GetCategoryNameById(p.CategoryId).Result,
                 Price = p.Price,
                 Stock = p.Stock,
                 ImageUrl = p.ImageUrl
@@ -120,6 +125,7 @@ namespace TallerIDWM.src.Controllers
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
+                Category = await _categoryRepository.GetCategoryNameById(product.CategoryId),
                 Price = product.Price,
                 Stock = product.Stock,
                 ImageUrl = product.ImageUrl,
@@ -138,7 +144,7 @@ namespace TallerIDWM.src.Controllers
         // PUT: api/product/{id}
         [HttpPut("update/{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IResult> UpdateProduct(int id, [FromForm] Product updateProduct, IFormFile? file)
+        public async Task<IResult> UpdateProduct(int id, [FromForm] ProductDto updateProductDto, IFormFile? file)
         {
 
             if(!ModelState.IsValid)
@@ -176,13 +182,21 @@ namespace TallerIDWM.src.Controllers
 
             }
 
-            var updatedProductEntity = await _productRepository.UpdateProduct(id, updateProduct);
+            var categoryId = await _categoryRepository.GetCategoryIdByName(updateProductDto.Category);
+            
+            productToUpdate.Name = updateProductDto.Name;
+            productToUpdate.CategoryId = categoryId;
+            productToUpdate.Price = updateProductDto.Price;
+            productToUpdate.Stock = updateProductDto.Stock;
+            productToUpdate.ImageUrl = productToUpdate.ImageUrl;
 
+            var updatedProductEntity = await _productRepository.UpdateProduct(id, productToUpdate);
 
             var productDto = new ProductDto
             {
                 ProductId = updatedProductEntity.ProductId,
                 Name = updatedProductEntity.Name,
+                Category = await _categoryRepository.GetCategoryNameById(updatedProductEntity.CategoryId),
                 Price = updatedProductEntity.Price,
                 Stock = updatedProductEntity.Stock,
                 ImageUrl = updatedProductEntity.ImageUrl
@@ -192,7 +206,7 @@ namespace TallerIDWM.src.Controllers
             return TypedResults.Ok(new
             {
                 Message = "Producto actualizado exitosamente.",
-                Product = updatedProductEntity
+                Product = productDto
             });
         }
 
@@ -201,32 +215,43 @@ namespace TallerIDWM.src.Controllers
         // POST: api/product/create
         [HttpPost("create")]
         [Authorize(Roles = "Admin")]
-        public async Task<IResult> CreateProduct([FromForm] Product product, IFormFile? file)
+        public async Task<IResult> CreateProduct([FromForm] CreateProductViewModel model)
         {
+            var categoryId = await _categoryRepository.GetCategoryIdByName(model.Product.Category);
+
+            var product = new Product
+            {
+                Name = model.Product.Name,
+                CategoryId = categoryId,
+                Price = model.Product.Price,
+                Stock = model.Product.Stock,
+                ImageUrl = model.Product.ImageUrl
+            };
+
             if (await _productRepository.ExistProduct(product.Name, product.CategoryId))
             {
                 return TypedResults.BadRequest("Ya existe un producto con ese nombre en la categoría seleccionada.");
             }
 
-            if (file != null)
+            if (model.ImageFile != null)
             {
-                var uploadResult = await _photoService.AddPhotoAsync(file);
+                var uploadResult = await _photoService.AddPhotoAsync(model.ImageFile);
                 product.ImageUrl = uploadResult.Url.ToString();
             }
 
             var newProduct = await _productRepository.CreateProduct(product);
 
-            var productDto = new CreateProductDto
+            var newProductDto = new ProductDto
             {
-                //ProductId = newProduct.ProductId,
+                ProductId = newProduct.ProductId,
                 Name = newProduct.Name,
+                Category = await _categoryRepository.GetCategoryNameById(newProduct.CategoryId),
                 Price = newProduct.Price,
                 Stock = newProduct.Stock,
                 ImageUrl = newProduct.ImageUrl
             };
 
-            return TypedResults.Ok(productDto);
-            
+            return TypedResults.Ok(newProductDto);
         }
 
     }

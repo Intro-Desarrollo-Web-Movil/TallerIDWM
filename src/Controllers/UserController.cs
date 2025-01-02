@@ -31,7 +31,8 @@ namespace TallerIDWM.src.Controllers
         // OBTENER TODOS LOS USUARIOS
         // GET: api/user
         [HttpGet("")]
-        public async Task<IActionResult> GetAll(){
+        public async Task<ActionResult<List<UserDto>>> GetAllUsers()
+        {
             var users = await _userRepository.GetAllUser();
             return Ok(users);
         }
