@@ -68,7 +68,7 @@ namespace TallerIDWM.src.Repositories
         public async Task<UserDto?> GetUserById(int id)
         {
             var user = await _context.Users.Include(u=> u.Gender)
-                .FirstOrDefaultAsync(u=> u.UserId == id);
+                .FirstOrDefaultAsync(u=> u.Id == id);
             return user is null ? null : UserMapper.toUserDto(user);
         }
 
@@ -85,7 +85,7 @@ namespace TallerIDWM.src.Repositories
         /// <returns>Dto del usuario actualizado</returns>
         public async Task<UserDto> UpdateUserStatus(int id, bool IsActive)
         {
-            var user = _context.Users.FirstOrDefault(u => u.UserId == id)
+            var user = _context.Users.FirstOrDefault(u => u.Id == id)
                 ?? throw new Exception("El usuario no existe");
             user.IsActive = IsActive;
             _context.Users.Update(user);

@@ -37,18 +37,38 @@ namespace TallerIDWM.src.Controllers
           var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
           if(!result.Succeeded) return Unauthorized("Invalid user or password");
 
+          var token = _tokenService.CreateToken(user);
+
+          // Establecer el token en una cookie
+          Response.Cookies.Append("jwt_token", token, new CookieOptions
+          {
+              HttpOnly = true,
+              Secure = true,
+              SameSite = SameSiteMode.Strict
+          });
+          
+          return Ok(new
+          {
+              Token = token
+          });
+
+          /*
           return Ok(
             new UserDto{
-              UserId = user.UserId,
+              Id = user.Id,
               Name = user.Name!,
               Email = user.Email!,
               BirthDate = user.BirthDate,
-              role = user.role,
+              role = user.Role,
               Gender = user.Gender,
               Rut = user.Rut,
-              Token = _tokenService.CreateToken(user)
+              RoleId = user.RoleId,
+              GenderId = user.GenderId,
+
+              Token = token
             }
           );
+          */
         }
         catch(Exception ex){
           return StatusCode(500, ex.Message);

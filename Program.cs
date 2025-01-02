@@ -9,11 +9,21 @@ using Microsoft.IdentityModel.Tokens;
 using TallerIDWM.src.Helpers;
 using TallerIDWM.src.Repositories;
 using System.Text;
+using TallerIDWM.src.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 Env.Load();
 
+// Verificación de la carga de variables de entorno
+Console.WriteLine("JWT_SECRET_KEY: " + Environment.GetEnvironmentVariable("JWT_SECRET_KEY"));
+Console.WriteLine("JWT_ISSUER: " + Environment.GetEnvironmentVariable("JWT_ISSUER"));
+Console.WriteLine("JWT_AUDIENCE: " + Environment.GetEnvironmentVariable("JWT_AUDIENCE"));
+
+
 // Add services to the container.
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -56,11 +66,14 @@ builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<ShoppingCartRepository>();
 builder.Services.AddScoped<InvoiceService>();
 builder.Services.AddScoped<InvoiceRepository>();
-builder.Services.AddScoped<InvoiceRepository>();
-builder.Services.AddScoped<InvoiceService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 
-
+// Registro de Identity
+builder.Services.AddIdentity<User, IdentityRole<int>>()
+    .AddEntityFrameworkStores<DataContext>()
+    .AddDefaultTokenProviders();
+    
 var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY")!);
 
 builder.Services.AddAuthentication(options =>
@@ -90,10 +103,12 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                 Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? throw new InvalidOperationException("JWT_SECRET_KEY not found")
             )),
-            ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateIssuer = true,
+            ValidateAudience = true,
             ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero
+            ClockSkew = TimeSpan.Zero,
+            ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+            ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
         };
     });
 
@@ -129,6 +144,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 

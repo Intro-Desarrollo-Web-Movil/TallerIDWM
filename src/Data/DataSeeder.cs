@@ -1,6 +1,8 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TallerIDWM.src.Data;
+using TallerIDWM.src.DTOs;
 using TallerIDWM.src.Models;
 
 public class DataSeeder
@@ -8,12 +10,14 @@ public class DataSeeder
     private static readonly JsonSerializerOptions _options =
         new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
+
+
     public static async Task Initialize(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<DataContext>();
 
-        await SeedTable<Role>("src/Data/Seed/roles.json", context.Roles, context);
+        await SeedTable<IdentityRole<int>>("src/Data/Seed/roles.json", context.Roles, context);
         await SeedTable<Gender>("src/Data/Seed/genders.json", context.Genders, context);
         await SeedTable<Category>("src/Data/Seed/categories.json", context.Categories, context);
         await SeedTable<User>("src/Data/Seed/users.json", context.Users, context);
@@ -24,6 +28,8 @@ public class DataSeeder
         // Generate Invoices and InvoiceDetails based on ShoppingCarts
         await SeedInvoicesFromCarts(context);
     }
+
+
 
     private static async Task SeedTable<T>(
         string filePath, DbSet<T> dbSet, DataContext context) where T : class
@@ -52,7 +58,7 @@ public class DataSeeder
         foreach (var cart in shoppingCarts)
         {
             if (!cart.CartDetail.Any()) continue; // Skip empty carts
-            var user = context.Users.FirstOrDefault(u => u.UserId == cart.UserId);
+            var user = context.Users.FirstOrDefault(u => u.Id == cart.UserId);
             if (user == null) continue; // Skip carts with invalid users
             // Create Invoice
             var invoice = new Invoice

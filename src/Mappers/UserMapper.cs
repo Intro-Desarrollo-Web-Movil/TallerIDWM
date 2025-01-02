@@ -16,14 +16,16 @@ namespace TallerIDWM.src.Mappers
         /// <returns></returns> <summary>
         public static UserDto toUserDto (this User user){
             return new UserDto {
-                UserId = user.UserId,
+                Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
                 BirthDate = user.BirthDate,
                 IsActive = user.IsActive,
-                role = user.role,
+                role = user.Role,
                 Gender = user.Gender,
-                Rut = user.Rut
+                Rut = user.Rut,
+                RoleId = user.RoleId,
+                GenderId = user.GenderId
             };
         }
 
@@ -38,9 +40,11 @@ namespace TallerIDWM.src.Mappers
                 Email = userDto.Email,
                 BirthDate = userDto.BirthDate,
                 IsActive = userDto.IsActive,
-                role = userDto.role,
+                Role = userDto.role,
                 Gender = userDto.Gender,
-                Rut = userDto.Rut
+                Rut = userDto.Rut,
+                RoleId = userDto.RoleId,
+                GenderId = userDto.GenderId
             };
         }
 

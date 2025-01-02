@@ -17,35 +17,40 @@ namespace TallerIDWM.src.Services
         private readonly IConfiguration _config;
         private readonly SymmetricSecurityKey _key;
 
-        public TokenService(IConfiguration config){
-            _config = config;
-            var signingKey = _config["JWt:SigningKey"];
-            if (string.IsNullOrEmpty(signingKey)){
-                throw new ArgumentNullException(nameof(signingKey), "Sgning key cannot be null or empty.");
+        public TokenService(IConfiguration config)
+        {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+            var signingKey = _config["JWT_SECRET_KEY"];
+            if (string.IsNullOrEmpty(signingKey))
+            {
+                throw new ArgumentNullException("signingKey", "Signing key cannot be null or empty.");
             }
-
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
         }
 
         public string CreateToken(User user){
+
             var claims = new List<Claim>{
-                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.GivenName, user.Name!)
+                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.Name!)
             
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
-            var tokenDescriptor = new SecurityTokenDescriptor{
+            
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = creds,
-                Issuer = _config["JWT:Issuer"],
-                Audience = _config["JWT:Audience"]
+                Issuer = _config["JWT_ISSUER"],
+                Audience = _config["JWT_AUDIENCE"]
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken((JwtSecurityToken)token);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }

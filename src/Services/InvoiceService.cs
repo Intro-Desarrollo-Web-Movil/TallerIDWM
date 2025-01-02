@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TallerIDWM.src.Interfaces;
 using TallerIDWM.src.Models;
 using TallerIDWM.src.Repositories;
 
@@ -25,16 +26,27 @@ namespace TallerIDWM.src.Services
         public async Task<Invoice> CreateInvoiceFromCart(ShoppingCart cart, int userId)
         {
              // Obtener el usuario asociado
-            var user = await _userRepository.GetUserById(userId);
-            if (user == null)
+            var userDto = await _userRepository.GetUserById(userId);
+            if (userDto == null)
             {
                 throw new KeyNotFoundException("Usuario no encontrado.");
             }
 
+            // Convertir UserDto a User
+            var user = new User
+            {
+                Id = userDto.Id,
+                Email = userDto.Email,
+                Name = userDto.Name,
+                BirthDate = userDto.BirthDate,
+                IsActive = userDto.IsActive,
+                RoleId = userDto.RoleId,
+                GenderId = userDto.GenderId
+            };
             // Crear la boleta
             var invoice = new Invoice
             {
-                UserId = user.UserId,
+                UserId = user.Id,
                 User = user,
                 PurchaseDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 Total = cart.CartDetail.Sum(cd => cd.Quantity * cd.Product.Price)
@@ -49,9 +61,14 @@ namespace TallerIDWM.src.Services
                 UnitPrice = cd.Product.Price
             }).ToList();
 
+            invoice.InvoiceDetails = invoiceDetails;
+
             // Guardar la boleta y los detalles
             await _invoiceRepository.AddInvoice(invoice, invoiceDetails);
             await _invoiceRepository.SaveChangesAsync();
+
+            
+            
 
             return invoice;
         }

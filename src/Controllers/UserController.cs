@@ -74,7 +74,7 @@ namespace TallerIDWM.src.Controllers
             }
             var user = await _userRepository.CreateUser(createUserDto);
 
-            return Created($"/api/user/{user.UserId}", user);
+            return Created($"/api/user/{user.Id}", user);
         }
 
         // ACTUALIZAR USUARIO
