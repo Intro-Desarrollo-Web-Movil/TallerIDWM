@@ -12,14 +12,14 @@ using TallerIDWM.src.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Authorization;
+using api.src.Controllers;
 
 namespace TallerIDWM.src.Controllers
 {
 
-    [Route("api/product")]
-    [ApiController]
-
-    public class ProductController : ControllerBase
+    
+    
+    public class ProductController : BaseApiController
     {
         private readonly IProductRepository _productRepository;
         private readonly IPhotoService _photoService;
@@ -31,6 +31,8 @@ namespace TallerIDWM.src.Controllers
         }
 
 
+        // OBTENER TODOS LOS PRODUCTOS
+        // GET: api/product
         [HttpGet("")]
         public async Task<IResult> GetAllProducts(string? name, int? Category, string? sort, int pageSize = 10, int pageNumber = 1, bool OutOfStock = false)
         {
@@ -65,7 +67,8 @@ namespace TallerIDWM.src.Controllers
             });
         }
 
-
+        // OBTENER PRODUCTO POR ID
+        // GET: api/product/{id}
         [HttpGet("{id}")]
         public async Task<IResult> GetProductById(int id)
         {
@@ -83,8 +86,9 @@ namespace TallerIDWM.src.Controllers
             return TypedResults.Ok(productDto);
         }
 
-
-        [HttpGet("allPAdmin")]
+        // OBTENER TODOS LOS PRODUCTOS (ADMIN)
+        // GET: api/product/all
+        [HttpGet("all")]
         [Authorize (Roles = "Admin")]
         public async Task<IResult> GetAllProductAdmin()
         {
@@ -102,7 +106,10 @@ namespace TallerIDWM.src.Controllers
             return TypedResults.Ok(productDtos);
         }
 
-        [HttpDelete("{id}")]
+        
+        // ELIMINAR PRODUCTO (ADMIN)
+        // DELETE: api/product/{id}
+        [HttpDelete("delete/{id}")]
         [Authorize(Roles = "Admin")]
 
         public async Task<IResult> DeleteProductById(int id)
@@ -127,7 +134,9 @@ namespace TallerIDWM.src.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        // ACTUALIZAR PRODUCTO (ADMIN)
+        // PUT: api/product/{id}
+        [HttpPut("update/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IResult> UpdateProduct(int id, [FromForm] Product updateProduct, IFormFile? file)
         {
@@ -188,7 +197,9 @@ namespace TallerIDWM.src.Controllers
         }
 
 
-        [HttpPost]
+        // CREAR PRODUCTO (ADMIN)
+        // POST: api/product/create
+        [HttpPost("create")]
         [Authorize(Roles = "Admin")]
         public async Task<IResult> CreateProduct([FromForm] Product product, IFormFile? file)
         {
@@ -205,9 +216,9 @@ namespace TallerIDWM.src.Controllers
 
             var newProduct = await _productRepository.CreateProduct(product);
 
-            var productDto = new ProductDto
+            var productDto = new CreateProductDto
             {
-                ProductId = newProduct.ProductId,
+                //ProductId = newProduct.ProductId,
                 Name = newProduct.Name,
                 Price = newProduct.Price,
                 Stock = newProduct.Stock,

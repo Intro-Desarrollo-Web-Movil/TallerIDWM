@@ -15,8 +15,7 @@ namespace TallerIDWM.src.Controllers
     Donde Repositorio realiza la lógica de consultas a base de datos y Servicios realiza la lógica de negocio.
     */
 
-    [Route("api/cart")]
-    [ApiController]
+    
     public class ShoppingCartController : BaseApiController
     {
         private readonly ShoppingCartService _shoppingCartService;

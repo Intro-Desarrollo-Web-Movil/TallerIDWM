@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using TallerIDWM.src.Services;
 using TallerIDWM.src.Models;
+using api.src.Controllers;
 
 namespace TallerIDWM.src.Controllers
 {
-    [Route("api/invoices")]
-    [ApiController]
-    public class InvoiceController : ControllerBase
+    
+    public class InvoiceController : BaseApiController
     {
         private readonly InvoiceService _invoiceService;
 

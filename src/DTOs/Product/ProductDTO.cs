@@ -9,7 +9,9 @@ namespace TallerIDWM.src.DTOs
 {
     public class ProductDto
     {
+        // ID No debe ir para crear un producto...
         public int ProductId { get; set; } // PK
+
         [StringLength(64, MinimumLength = 10, ErrorMessage = "El nombre debe tener entre 10 y 64 caracteres")]
         public string Name { get; set; } = string.Empty;
         [Range(1, 99999999, ErrorMessage = "El precio debe ser mayor a 0 y menor que 100 millones")]

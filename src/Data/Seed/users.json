@@ -1,6 +1,17 @@
 [
     {
         "UserId": 1,
+        "Name": "Ignacio Mancilla",
+        "Email": "admin@idwm.cl",
+        "Password": "P4ssw0rd",
+        "BirthDate": "2000-10-25",
+        "IsActive": true,
+        "RoleId": 1,
+        "GenderId": 2,
+        "Rut": "20.416.699-4"
+    },
+    {
+        "UserId": 2,
         "Name": "Jorge Pérez",
         "Email": "jorge.perez@example.com",
         "Password": "securepassword123",
@@ -11,7 +22,7 @@
         "Rut": "12.345.678-5"
     },
     {
-        "UserId": 2,
+        "UserId": 3,
         "Name": "María Rodríguez",
         "Email": "maria.rodriguez@example.com",
         "Password": "securepassword456",
@@ -20,18 +31,5 @@
         "RoleId": 2,
         "GenderId": 1,
         "Rut" : "23.456.789-0"
-    },
-
-    {
-        "UserId": 3,
-        "Name": "Admin User",
-        "Email": "admin@example.com",
-        "Password": "adminpassword",
-        "BirthDate": "1980-01-01",
-        "IsActive": true,
-        "RoleId": 1,
-        "GenderId": 2,
-        "Rut" : "34.567.890-1"
-
     }
 ]

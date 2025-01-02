@@ -27,14 +27,18 @@ namespace TallerIDWM.src.Controllers
             _userRepository = userRepository;
 
         }
-
-        [HttpGet]
+        
+        // OBTENER TODOS LOS USUARIOS
+        // GET: api/user
+        [HttpGet("")]
         public async Task<IActionResult> GetAll(){
             var users = await _userRepository.GetAllUser();
             return Ok(users);
         }
 
-        [HttpDelete ("{id}")]
+        // BORRAR USUARIO POR ID
+        // DELETE: api/user/delete/{id}
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute]int id){
             var user = await _userRepository.GetUserById(id);
             if (user is null){
@@ -44,7 +48,9 @@ namespace TallerIDWM.src.Controllers
             return Ok(deletedUser);
         }
 
-        [HttpPut("{id}")]
+        // ACTUALIZAR ESTADO DE USUARIO
+        // PUT: api/user/status/{id}
+        [HttpPut("status/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUserStatus([FromRoute] int id, [FromBody]EnableUserDto enableUserDto){
             var user = await _userRepository.GetUserById(id);
@@ -58,7 +64,9 @@ namespace TallerIDWM.src.Controllers
             return Ok(updateUser);
         }
 
-        [HttpPost]
+        // CREAR USUARIO
+        // POST: api/user/create
+        [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromForm] CreateUserDto createUserDto){
             var email = createUserDto.Email;
             if(await _userRepository.GetUserByEmail(email) is not null){
@@ -69,6 +77,8 @@ namespace TallerIDWM.src.Controllers
             return Created($"/api/user/{user.UserId}", user);
         }
 
+        // ACTUALIZAR USUARIO
+        // PUT: api/user/update/{id}
         [HttpPut("update/{id}")]
         [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] UpdateUserDto updateUserDto){
