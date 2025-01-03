@@ -70,6 +70,16 @@ builder.Services.AddScoped<InvoiceService>();
 builder.Services.AddScoped<InvoiceRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+// Configurar CORS para permitir cualquier origen (Lo necesita el Frontend)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+});
+
+
 
 // Registro de Identity
 builder.Services.AddIdentity<User, IdentityRole<int>>()
@@ -144,6 +154,9 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
 }
+
+// Usa CORS
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
