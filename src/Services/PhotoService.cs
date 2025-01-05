@@ -19,9 +19,9 @@ namespace TallerIDWM.src.Services
         public PhotoService(IOptions<CloudinarySettings> configuration)
         {
             var account = new Account(
-                configuration.Value.CloudName,
-                configuration.Value.ApiKey,
-                configuration.Value.ApiSecret
+                "dsrlmiwir",
+                "595868451172253",
+                "qM7odr-mzE9EBq2mPrijr8RqRQE"
             );
 
             _cloudinary = new Cloudinary(account);

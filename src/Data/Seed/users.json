@@ -28,5 +28,46 @@
         "RoleId": 2,
         "GenderId": 1,
         "Rut" : "23.456.789-0"
+    },
+
+    {
+        "Name": "Samuel Fuentes",
+        "Email": "samuel.fuentes@example.com",
+        "Password": "securepassword123",
+        "BirthDate": "1993-05-15",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "11.111.111-1"
+    },
+    {
+        "Name": "Axel Mondaca",
+        "Email": "axel.mondaca@example.com",
+        "Password": "securepassword456",
+        "BirthDate": "1950-09-23",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut" : "22.222.222-2"
+    },
+    {
+        "Name": "Jose Acuña",
+        "Email": "jose.acuna@example.com",
+        "Password": "securepassword123",
+        "BirthDate": "1995-05-15",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "12.111.111-5"
+    },
+    {
+        "Name": "Francie Medina",
+        "Email": "fran.medina@example.com",
+        "Password": "securepassword456",
+        "BirthDate": "1920-09-23",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut" : "12.121.121-2"
     }
 ]

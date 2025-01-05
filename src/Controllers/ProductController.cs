@@ -36,15 +36,15 @@ namespace TallerIDWM.src.Controllers
         // OBTENER TODOS LOS PRODUCTOS
         // GET: api/product
         [HttpGet("")]
-        public async Task<IResult> GetAllProducts(string? name, int? Category, string? sort, int pageSize = 10, int pageNumber = 1, bool OutOfStock = false)
+        public async Task<IResult> GetAllProducts(string? name, int? category, string? sort, int pageSize = 10, int pageNumber = 1, bool outOfStock = false)
         {
             if (sort != null && sort.ToLower() != "asc" && sort.ToLower() != "desc")
-        {
-            return TypedResults.BadRequest("El valor de 'sort' debe ser 'asc' o 'desc'.");
-        }
+            {
+                return TypedResults.BadRequest("El valor de 'sort' debe ser 'asc' o 'desc'.");
+            }
 
-            var products = await _productRepository.GetAllProducts(name, Category, sort, 10, 1, OutOfStock: false);
-            var totalItems = await _productRepository.CountProducts(name, Category, OutOfStock: false);
+            var products = await _productRepository.GetAllProducts(name, category, sort, pageSize, pageNumber, outOfStock);
+            var totalItems = await _productRepository.CountProducts(name, category, outOfStock);
 
             if (products == null || !products.Any())
             {
@@ -61,13 +61,16 @@ namespace TallerIDWM.src.Controllers
                 ImageUrl = p.ImageUrl
             }).ToList();
 
-            return TypedResults.Ok(new 
-            { 
+            var response = new
+            {
                 TotalItems = totalItems,
-                PageNumber = pageNumber,
                 PageSize = pageSize,
+                PageNumber = pageNumber,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
                 Products = productDtos
-            });
+            };
+
+            return TypedResults.Ok(response);
         }
 
         // OBTENER PRODUCTO POR ID

@@ -17,6 +17,10 @@ public class DataSeeder
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<DataContext>();
 
+
+        // TO DO: CAMBIAR URL IMAGE DEL PRODUCT PORQUE TIENEU UNO DE EJEMPLO DESDE EL JSON
+    
+        // Poblar las Tablas de la Base de datos
         await SeedTable<IdentityRole<int>>("src/Data/Seed/roles.json", context.Roles, context);
         await SeedTable<Gender>("src/Data/Seed/genders.json", context.Genders, context);
         await SeedTable<Category>("src/Data/Seed/categories.json", context.Categories, context);
@@ -30,7 +34,7 @@ public class DataSeeder
     }
 
 
-
+    // Método para poblar las tablas de la base de datos
     private static async Task SeedTable<T>(
         string filePath, DbSet<T> dbSet, DataContext context) where T : class
     {
@@ -44,6 +48,8 @@ public class DataSeeder
         await dbSet.AddRangeAsync(data);
         await context.SaveChangesAsync();
     }
+
+
 
     private static async Task SeedInvoicesFromCarts(DataContext context)
     {

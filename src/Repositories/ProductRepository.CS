@@ -18,59 +18,57 @@ namespace TallerIDWM.src.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts(string? name, int? Category, string? sort, int pageSize, int pageNumber, bool OutOfStock = false)
+        public async Task<IEnumerable<Product>> GetAllProducts(string? name, int? category, string? sort, int pageSize, int pageNumber, bool outOfStock)
         {
-            var products = await _context.Products.ToListAsync();
+            var query = _context.Products.AsQueryable();
 
-            if(!OutOfStock)
+            if (!string.IsNullOrEmpty(name))
             {
-                products = products.Where(u => u.Stock > 0).ToList();
+                query = query.Where(p => p.Name.Contains(name));
             }
 
-            if(!string.IsNullOrEmpty(name))
+            if (category.HasValue)
             {
-                products = products.Where(u => u.Name.ToLower().Contains(name.ToLower())).ToList();
+                query = query.Where(p => p.CategoryId == category.Value);
             }
 
-            if(!string.IsNullOrEmpty(Category.ToString()))
+            if (outOfStock)
             {
-                products = products.Where(u => u.CategoryId == Category).ToList();
+                query = query.Where(p => p.Stock == 0);
             }
 
-            if(sort == "asc")
+            if (!string.IsNullOrEmpty(sort))
             {
-                products = products.OrderBy(u => u.Price).ToList();
+                query = sort.ToLower() == "asc" ? query.OrderBy(p => p.Name) : query.OrderByDescending(p => p.Name);
             }
 
-            else if(sort == "desc")
-            {
-                products = products.OrderByDescending(u => u.Price).ToList();
-            }
-
-            return await Task.FromResult(products.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList());
+            return await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
 
 
-        public async Task<int> CountProducts(string? name, int? Category, bool OutOfStock = false)
+        public async Task<int> CountProducts(string? name, int? category, bool outOfStock)
         {
-            var products = await _context.Products.ToListAsync();
+            var query = _context.Products.AsQueryable();
 
-            if(!OutOfStock)
+            if (!string.IsNullOrEmpty(name))
             {
-                products = products.Where(u => u.Stock > 0).ToList();
+                query = query.Where(p => p.Name.Contains(name));
             }
 
-            if(!string.IsNullOrEmpty(name))
+            if (category.HasValue)
             {
-                products = products.Where(u => u.Name.ToLower().Contains(name.ToLower())).ToList();
+                query = query.Where(p => p.CategoryId == category.Value);
             }
 
-            if(!string.IsNullOrEmpty(Category.ToString()))
+            if (outOfStock)
             {
-                products = products.Where(u => u.CategoryId == Category).ToList();
+                query = query.Where(p => p.Stock == 0);
             }
 
-            return products.Count();
+            return await query.CountAsync();
         }
 
 

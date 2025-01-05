@@ -7,8 +7,17 @@
     { "ProductId": 6, "Name": "Camiseta Roja", "Price": 10000, "Stock": 50, "ImageUrl": "https://example.com/camiseta1.jpg", "CategoryId": 1 },
     { "ProductId": 7, "Name": "Gorro Roja", "Price": 5000, "Stock": 30, "ImageUrl": "https://example.com/gorro1.jpg", "CategoryId": 2 },
     { "ProductId": 8, "Name": "Juguete de Metal Rojo", "Price": 15000, "Stock": 20, "ImageUrl": "https://example.com/juguete1.jpg", "CategoryId": 3 },
-    { "ProductId": 9, "Name": "Caja de Dardos", "Price": 8000, "Stock": 100, "ImageUrl": "https://example.com/galletas.jpg", "CategoryId": 4 },
-    { "ProductId": 10, "Name": "Libro de Ciencia", "Price": 12000, "Stock": 40, "ImageUrl": "https://example.com/libro1.jpg", "CategoryId": 5 }
-
-
+    { "ProductId": 9, "Name": "Caja de Chocolates", "Price": 8000, "Stock": 100, "ImageUrl": "https://example.com/galletas.jpg", "CategoryId": 4 },
+    { "ProductId": 10, "Name": "Libro de Ciencia", "Price": 12000, "Stock": 40, "ImageUrl": "https://example.com/libro1.jpg", "CategoryId": 5 },
+    { "ProductId": 11, "Name": "Camiseta Morada", "Price": 10000, "Stock": 50, "ImageUrl": "https://example.com/camiseta1.jpg", "CategoryId": 1 },
+    { "ProductId": 12, "Name": "Gorro Morado", "Price": 5000, "Stock": 30, "ImageUrl": "https://example.com/gorro1.jpg", "CategoryId": 2 },
+    { "ProductId": 13, "Name": "Juguete de Cristal", "Price": 15000, "Stock": 20, "ImageUrl": "https://example.com/juguete1.jpg", "CategoryId": 3 },
+    { "ProductId": 14, "Name": "Caja de Dulces", "Price": 8000, "Stock": 100, "ImageUrl": "https://example.com/galletas.jpg", "CategoryId": 4 },
+    { "ProductId": 15, "Name": "Libro de Misterios", "Price": 12000, "Stock": 40, "ImageUrl": "https://example.com/libro1.jpg", "CategoryId": 5 },
+    { "ProductId": 16, "Name": "Camiseta Morada", "Price": 10000, "Stock": 50, "ImageUrl": "https://example.com/camiseta1.jpg", "CategoryId": 1 },
+    { "ProductId": 17, "Name": "Gorro Morado", "Price": 5000, "Stock": 30, "ImageUrl": "https://example.com/gorro1.jpg", "CategoryId": 2 },
+    { "ProductId": 18, "Name": "Juguete de Metal Morado", "Price": 15000, "Stock": 20, "ImageUrl": "https://example.com/juguete1.jpg", "CategoryId": 3 },
+    { "ProductId": 19, "Name": "Caja de Caramelos", "Price": 8000, "Stock": 100, "ImageUrl": "https://example.com/galletas.jpg", "CategoryId": 4 },
+    { "ProductId": 20, "Name": "Libro del conductor", "Price": 12000, "Stock": 40, "ImageUrl": "https://example.com/libro1.jpg", "CategoryId": 5 },
+    { "ProductId": 21, "Name": "Libro de chistes", "Price": 100000, "Stock": 2, "ImageUrl": "https://example.com/libro1.jpg", "CategoryId": 5 }
 ]
