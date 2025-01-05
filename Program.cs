@@ -74,7 +74,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:4200")
+        builder => builder.WithOrigins("http://localhost:4200","http//localhost:8100")
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });
