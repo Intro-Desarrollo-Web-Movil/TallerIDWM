@@ -12,10 +12,11 @@ namespace TallerIDWM.src.Interfaces
         Task<UserDto> CreateUser(CreateUserDto createUserDto);
         Task<UserDto> DeleteUser (int id);
         Task<UserDto?> GetUserById(int id);
-        Task<List<UserDto>> GetAllUser();
+        Task<List<UserDto>> GetAllUser(string? name, int pageSize, int pageNumbe);
         Task<UserDto> UpdateUser(int id, UpdateUserDto updateUserDto);
         Task<UserDto> GetCurrentUser();
         Task<UserDto> UpdateUserStatus(int id, bool IsActive);
         Task<UserDto?> GetUserByEmail(string email);
+        Task<int> CountUsers(string? name);
     }
 }

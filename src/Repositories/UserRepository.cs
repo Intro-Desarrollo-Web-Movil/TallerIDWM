@@ -50,13 +50,36 @@ namespace TallerIDWM.src.Repositories
         /// Método para obtener todos los usuarios del sistema
         /// </summary>
         /// <returns>todos los usuarios del sistema</returns> <summary>
-        public async Task<List<UserDto>> GetAllUser()
+        public async Task<List<UserDto>> GetAllUser(string? name, int pageSize, int pageNumber)
         {
-            return await _context.Users
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(u => u.Name.Contains(name));
+            }
+
+            var users = await query
                 .Include(u => u.Role)
                 .Include(u => u.Gender)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .Select(user => user.toUserDto())
                 .ToListAsync();
+
+            return users;
+        }
+
+        public async Task<int> CountUsers(string? name)
+        {
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(u => u.Name.Contains(name));
+            }
+
+            return await query.CountAsync();
         }
 
         public Task<UserDto> GetCurrentUser()

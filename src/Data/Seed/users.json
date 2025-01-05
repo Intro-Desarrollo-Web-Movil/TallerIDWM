@@ -69,5 +69,195 @@
         "RoleId": 2,
         "GenderId": 1,
         "Rut" : "12.121.121-2"
+    },
+    {
+        "Name": "Ana Gómez",
+        "Email": "ana.gomez@example.com",
+        "Password": "password789",
+        "BirthDate": "1992-07-12",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "21.234.567-8"
+    },
+    {
+        "Name": "Carlos Díaz",
+        "Email": "carlos.diaz@example.com",
+        "Password": "password123",
+        "BirthDate": "1985-03-10",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "13.456.789-2"
+    },
+    {
+        "Name": "Laura Martínez",
+        "Email": "laura.martinez@example.com",
+        "Password": "password456",
+        "BirthDate": "1991-11-20",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "14.567.890-3"
+    },
+    {
+        "Name": "Pedro Ramírez",
+        "Email": "pedro.ramirez@example.com",
+        "Password": "password789",
+        "BirthDate": "1987-02-14",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "15.678.901-4"
+    },
+    {
+        "Name": "Sofía Torres",
+        "Email": "sofia.torres@example.com",
+        "Password": "password123",
+        "BirthDate": "1994-06-18",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "16.789.012-5"
+    },
+    {
+        "Name": "Miguel Fernández",
+        "Email": "miguel.fernandez@example.com",
+        "Password": "password456",
+        "BirthDate": "1989-12-25",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "17.890.123-6"
+    },
+    {
+        "Name": "Isabel Morales",
+        "Email": "isabel.morales@example.com",
+        "Password": "password789",
+        "BirthDate": "1995-08-30",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "18.901.234-7"
+    },
+    {
+        "Name": "Juan López",
+        "Email": "juan.lopez@example.com",
+        "Password": "password123",
+        "BirthDate": "1986-04-05",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "19.012.345-8"
+    },
+    {
+        "Name": "Elena Castillo",
+        "Email": "elena.castillo@example.com",
+        "Password": "password456",
+        "BirthDate": "1993-09-15",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "20.123.456-9"
+    },
+    {
+        "Name": "Luis Herrera",
+        "Email": "luis.herrera@example.com",
+        "Password": "password789",
+        "BirthDate": "1990-01-22",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "21.234.567-0"
+    },
+    {
+        "Name": "Gabriela Ruiz",
+        "Email": "gabriela.ruiz@example.com",
+        "Password": "password123",
+        "BirthDate": "1988-11-11",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "22.345.678-1"
+    },
+    {
+        "Name": "Ricardo Vargas",
+        "Email": "ricardo.vargas@example.com",
+        "Password": "password456",
+        "BirthDate": "1992-03-03",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "23.456.789-2"
+    },
+    {
+        "Name": "Patricia Rojas",
+        "Email": "patricia.rojas@example.com",
+        "Password": "password789",
+        "BirthDate": "1987-07-07",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "24.567.890-3"
+    },
+    {
+        "Name": "Fernando Soto",
+        "Email": "fernando.soto@example.com",
+        "Password": "password123",
+        "BirthDate": "1991-05-25",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "25.678.901-4"
+    },
+    {
+        "Name": "Marta Reyes",
+        "Email": "marta.reyes@example.com",
+        "Password": "password456",
+        "BirthDate": "1989-10-10",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "26.789.012-5"
+    },
+    {
+        "Name": "Diego Campos",
+        "Email": "diego.campos@example.com",
+        "Password": "password789",
+        "BirthDate": "1994-12-12",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "27.890.123-6"
+    },
+    {
+        "Name": "Lucía Vega",
+        "Email": "lucia.vega@example.com",
+        "Password": "password123",
+        "BirthDate": "1990-09-09",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "28.901.234-7"
+    },
+    {
+        "Name": "Alberto Silva",
+        "Email": "alberto.silva@example.com",
+        "Password": "password456",
+        "BirthDate": "1988-06-06",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 2,
+        "Rut": "29.012.345-8"
+    },
+    {
+        "Name": "Carmen Flores",
+        "Email": "carmen.flores@example.com",
+        "Password": "password789",
+        "BirthDate": "1993-11-11",
+        "IsActive": true,
+        "RoleId": 2,
+        "GenderId": 1,
+        "Rut": "30.123.456-9"
     }
 ]

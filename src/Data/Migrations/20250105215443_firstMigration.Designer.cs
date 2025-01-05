@@ -11,7 +11,7 @@ using TallerIDWM.src.Data;
 namespace api.src.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250105180045_firstMigration")]
+    [Migration("20250105215443_firstMigration")]
     partial class firstMigration
     {
         /// <inheritdoc />

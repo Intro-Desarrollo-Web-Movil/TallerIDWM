@@ -31,10 +31,26 @@ namespace TallerIDWM.src.Controllers
         // OBTENER TODOS LOS USUARIOS
         // GET: api/user
         [HttpGet("")]
-        public async Task<ActionResult<List<UserDto>>> GetAllUsers()
+        public async Task<IResult> GetAllUsers(string? name, int pageSize = 10, int pageNumber = 1)
         {
-            var users = await _userRepository.GetAllUser();
-            return Ok(users);
+            var users = await _userRepository.GetAllUser(name, pageSize, pageNumber);
+            var totalItems = await _userRepository.CountUsers(name);
+
+            if (users == null || !users.Any())
+            {
+                return TypedResults.NotFound("No se encontraron usuarios.");
+            }
+
+            var response = new
+            {
+                TotalItems = totalItems,
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                Users = users
+            };
+
+            return TypedResults.Ok(response);
         }
 
         // BORRAR USUARIO POR ID
