@@ -19,6 +19,7 @@ namespace TallerIDWM.src.Mappers
             return new UserDto {
                 Id = user.Id,
                 Name = user.Name,
+                Password = user.Password,
                 Email = user.Email,
                 BirthDate = user.BirthDate,
                 IsActive = user.IsActive,
@@ -45,6 +46,7 @@ namespace TallerIDWM.src.Mappers
             return new User
             {
                 Name = userDto.Name,
+                Password = userDto.Password,
                 Email = userDto.Email,
                 BirthDate = userDto.BirthDate,
                 IsActive = userDto.IsActive,

@@ -16,6 +16,10 @@ namespace TallerIDWM.src.DTOs
 
         [StringLength(255, MinimumLength = 8)]
         public required string Name { get; set; }
+
+        [StringLength(255, MinimumLength = 8)]
+        public required string Password { get; set; }
+
         [EmailAddress]
         public required string Email { get; set; }
         [Birthdate]
